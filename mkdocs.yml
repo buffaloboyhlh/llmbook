@@ -1,1 +1,46 @@
-site_name: My Docs
+site_name: 📚面试秘籍
+theme:
+  name: material
+  language: zh
+  font:
+    text: Roboto
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tabs
+    - navigation.tabs.sticky
+#    - navigation.sections
+    - navigation.prune
+    - navigation.indexes
+    - toc.follow
+    - navigation.top
+    - search.suggest
+    - navigation.path
+  palette:
+    - scheme: default
+      accent: light green
+      primary: teal
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - scheme: slate
+      accent: light green
+      primary: teal
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+
+plugins:
+  - search
+
+nav:
+  - 🏠Home: index.md
+  - 🐙大模型:
+      - 第一章：预训练:
+          - 优化器: llm/chapter01/optimizer.md
