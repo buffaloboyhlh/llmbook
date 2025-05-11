@@ -5,6 +5,7 @@ theme:
   font:
     text: Roboto
   features:
+    - content.tabs.link
     - navigation.instant
     - navigation.instant.progress
     - navigation.tabs
@@ -18,13 +19,13 @@ theme:
     - navigation.path
   palette:
     - scheme: default
-      accent: light green
+      accent: amber
       primary: teal
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
     - scheme: slate
-      accent: light green
+      accent: amber
       primary: teal
       toggle:
         icon: material/lightbulb-outline
@@ -34,7 +35,24 @@ theme:
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js
+  - javascripts/tables.js
+  - javascripts/config.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - search
@@ -42,5 +60,11 @@ plugins:
 nav:
   - 🏠Home: index.md
   - 🐙大模型:
+      - 第0章：大模型基础:
+          - Transformer: llm/chapter00/transformer.md
+          - Bert: llm/chapter00/bert.md
       - 第一章：预训练:
           - 优化器: llm/chapter01/optimizer.md
+
+  - 🌵算法大本营:
+      - 基础: algorithm/basic.md
