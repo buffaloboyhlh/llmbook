@@ -1,0 +1,72 @@
+/* ========== Light Mode 标题配色 ========== */
+.md-typeset h1 { color: #004d40; }   /* Teal 900 */
+.md-typeset h2 { color: #00695c; }   /* Teal 800 */
+.md-typeset h3 { color: #00796b; }   /* Teal 700 */
+.md-typeset h4 { color: #00897b; }   /* Teal 600 */
+.md-typeset h5 { color: #4db6ac; }   /* Teal 300 */
+.md-typeset h6 { color: #80cbc4; }   /* Teal 200 */
+
+/* ========== Dark Mode 标题配色 ========== */
+@media (prefers-color-scheme: dark) {
+  .md-typeset h1 { color: #e0f2f1; }  /* Teal 50 */
+  .md-typeset h2 { color: #b2dfdb; }  /* Teal 100 */
+  .md-typeset h3 { color: #80cbc4; }  /* Teal 200 */
+  .md-typeset h4 { color: #4db6ac; }  /* Teal 300 */
+  .md-typeset h5 { color: #26a69a; }  /* Teal 400 */
+  .md-typeset h6 { color: #009688; }  /* Teal 500 */
+}
+
+/* 正文文字优化 */
+.md-typeset p {
+  color: #333;
+  line-height: 1.7;
+  font-size: 17px;
+}
+@media (prefers-color-scheme: dark) {
+  .md-typeset p {
+    color: #e0e0e0;
+  }
+}
+
+/* 链接样式 */
+.md-typeset a {
+  color: #ff8f00;      /* amber 800 */
+  font-weight: 500;
+  text-decoration: underline dotted;
+}
+@media (prefers-color-scheme: dark) {
+  .md-typeset a {
+    color: #ffca28;    /* amber 400 */
+  }
+}
+
+.md-typeset strong {
+  color: coral;
+}
+
+/* 强化表格线条和视觉结构 */
+.md-typeset table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #999999;  /* 整体边框更鲜明 */
+  font-size: 0.95rem;
+}
+
+.md-typeset table th {
+  background-color: #f0f4f8;
+  color: #1f2937;
+  padding: 10px;
+  border: 1px solid #999999;  /* 表头边框线 */
+  font-weight: 600;
+}
+
+.md-typeset table td {
+  background-color: #ffffff;
+  color: #1f2937;
+  padding: 10px;
+  border: 1px solid #999999;  /* 所有单元格边框线 */
+}
+
+.md-typeset table tr:nth-child(even) td {
+  background-color: #f9fafb;  /* 偶数行底色，增强可读性 */
+}

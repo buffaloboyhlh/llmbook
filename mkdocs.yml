@@ -4,6 +4,7 @@ theme:
   language: zh
   font:
     text: Roboto
+    code: Roboto Mono
   features:
     - content.tabs.link
     - navigation.instant
@@ -18,13 +19,15 @@ theme:
     - search.suggest
     - navigation.path
   palette:
-    - scheme: default
+    - media: "(prefers-color-scheme: dark)"
+      scheme: default
       accent: amber
       primary: teal
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
       accent: amber
       primary: teal
       toggle:
@@ -49,22 +52,42 @@ markdown_extensions:
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js
-  - javascripts/tables.js
-  - javascripts/config.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - search
 
+extra_css:
+  - styles/extra.css
+
 nav:
   - 🏠Home: index.md
   - 🐙大模型:
+      - Hugging Face Transformers:
+          - pipeline: llm/huggingface/pipeline.md
+          - model和tokenizer: llm/huggingface/autoclass.md
+          - trainer: llm/huggingface/trainer.md
+          - peft: llm/huggingface/peft.md
+          - datasets: llm/huggingface/datasets.md
+          - accelerate: llm/huggingface/accelerate.md
+          - evaluate: llm/huggingface/evaluate.md
       - 第0章：大模型基础:
           - Transformer: llm/chapter00/transformer.md
           - Bert: llm/chapter00/bert.md
       - 第一章：预训练:
           - 优化器: llm/chapter01/optimizer.md
 
-  - 🌵算法大本营:
+  - 🐹算法大本营:
       - 基础: algorithm/basic.md
+
+  - 🐣深度学习:
+      - Pytorch手册:
+          - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
+          - Pytorch激活函数: deeplearning/pytorch/activate.md
+          - Pytorch损失函数: deeplearning/pytorch/loss.md
+          - Pytorch优化器:  deeplearning/pytorch/optimizer.md
+          - Pytorch学习率调整器: deeplearning/pytorch/scheduler.md
+          - Pytorch可视化: deeplearning/pytorch/visual.md
+          - Pytorch数据预处理: deeplearning/pytorch/dataset.md
+
