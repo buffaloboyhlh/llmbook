@@ -72,9 +72,12 @@ nav:
           - datasets: llm/huggingface/datasets.md
           - accelerate: llm/huggingface/accelerate.md
           - evaluate: llm/huggingface/evaluate.md
+          - 项目实战:
+              - 文本分类: llm/huggingface/projects/classifier.md
+              - 中文情感分类: llm/huggingface/projects/sentiment.md
       - 第0章：大模型基础:
-          - Transformer: llm/chapter00/transformer.md
-          - Bert: llm/chapter00/bert.md
+          - Transformer架构: llm/chapter00/transformer.md
+          - Bert架构: llm/chapter00/bert.md
       - 第一章：预训练:
           - 优化器: llm/chapter01/optimizer.md
 
