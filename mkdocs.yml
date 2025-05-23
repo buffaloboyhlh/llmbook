@@ -77,7 +77,9 @@ nav:
               - 中文情感分类: llm/huggingface/projects/sentiment.md
               - 中文填空: llm/huggingface/projects/close.md
               - 中文句子关系推断: llm/huggingface/projects/inference.md
+              - 中文命名实体识别: llm/huggingface/projects/ner.md
       - 第0章：大模型基础:
+          - 注意力机制: llm/chapter00/attention.md
           - Transformer架构: llm/chapter00/transformer.md
           - Bert架构: llm/chapter00/bert.md
       - 第一章：预训练:
