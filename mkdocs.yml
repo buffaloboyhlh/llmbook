@@ -63,6 +63,40 @@ extra_css:
 
 nav:
   - 🏠Home: index.md
+  - 🐵程序员的数学: maths/math.md
+  - 🦏语言大本营:
+      - Python: langs/python/basic.md
+      - C++: langs/c++/basic.md
+  - 🐹算法大本营:
+      - 基础: algorithm/basic.md
+  - 🐺云原生:
+      - Docker:  cloud/docker/docker.md
+      - Kubernetes:
+          - k8s: cloud/k8s/k8s.md
+          - helm: cloud/k8s/helm.md
+          - crictl: cloud/k8s/crictl.md
+      - Prometheus:
+          - Prometheus教程: cloud/prometheus/basic.md
+          - Prometheus告警: cloud/prometheus/alert.md
+          - Prometheus配置文件: cloud/prometheus/prometheus.yml.md
+          - PromQL: cloud/prometheus/promql.md
+  - 🦧数据分析大营:
+      - Numpy: analysis/numpy.md
+      - Pandas: analysis/pandas.md
+      - Matplotlib: analysis/matplotlib.md
+      - Seaborn: analysis/seaborn.md
+      - 数据分析综合项目实战: analysis/project.md
+  - 🐴机器学习:
+      - scikit-learn手册: machinelearning/scikit-learn/basic.md
+  - 🐣深度学习:
+      - Pytorch手册:
+          - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
+          - Pytorch激活函数: deeplearning/pytorch/activate.md
+          - Pytorch损失函数: deeplearning/pytorch/loss.md
+          - Pytorch优化器:  deeplearning/pytorch/optimizer.md
+          - Pytorch学习率调整器: deeplearning/pytorch/scheduler.md
+          - Pytorch可视化: deeplearning/pytorch/visual.md
+          - Pytorch数据预处理: deeplearning/pytorch/dataset.md
   - 🐙大模型:
       - Hugging Face Transformers:
           - pipeline: llm/huggingface/pipeline.md
@@ -72,7 +106,7 @@ nav:
           - datasets: llm/huggingface/datasets.md
           - accelerate: llm/huggingface/accelerate.md
           - evaluate: llm/huggingface/evaluate.md
-          - 项目实战:
+          - ⛄项目实战:
               - 文本分类: llm/huggingface/projects/classifier.md
               - 中文情感分类: llm/huggingface/projects/sentiment.md
               - 中文填空: llm/huggingface/projects/close.md
@@ -85,16 +119,7 @@ nav:
       - 第一章：预训练:
           - 优化器: llm/chapter01/optimizer.md
 
-  - 🐹算法大本营:
-      - 基础: algorithm/basic.md
-
-  - 🐣深度学习:
-      - Pytorch手册:
-          - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
-          - Pytorch激活函数: deeplearning/pytorch/activate.md
-          - Pytorch损失函数: deeplearning/pytorch/loss.md
-          - Pytorch优化器:  deeplearning/pytorch/optimizer.md
-          - Pytorch学习率调整器: deeplearning/pytorch/scheduler.md
-          - Pytorch可视化: deeplearning/pytorch/visual.md
-          - Pytorch数据预处理: deeplearning/pytorch/dataset.md
+  - 🐠大模型应用:
+      - LangChain:
+          - 基础教程: llmapp/langchain/basic.md
 
