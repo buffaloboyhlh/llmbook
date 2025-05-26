@@ -18,6 +18,7 @@ theme:
     - navigation.top
     - search.suggest
     - navigation.path
+    - content.code.copy
   palette:
     - media: "(prefers-color-scheme: dark)"
       scheme: default
@@ -36,18 +37,13 @@ theme:
 
 
 markdown_extensions:
-  - pymdownx.arithmatex:
-      generic: true
-  - admonition
-  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.superfences
-  - attr_list
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.tabbed
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

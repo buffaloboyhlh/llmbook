@@ -70,3 +70,110 @@
 .md-typeset table tr:nth-child(even) td {
   background-color: #f9fafb;  /* 偶数行底色，增强可读性 */
 }
+
+
+/* 🌟 亮色模式代码块样式 (One Light) */
+@media (prefers-color-scheme: light) {
+  .md-typeset pre code {
+    background-color: #f8f8f8;  /* 浅灰背景 */
+    color: #383a42;             /* 主文字颜色 */
+    border-radius: 6px;
+    padding: 0.75em;
+    line-height: 1.5;
+    font-size: 0.9em;
+  }
+
+  /* 关键字 */
+  .md-typeset pre code .k,
+  .md-typeset pre code .kd,
+  .md-typeset pre code .kn {
+    color: #a626a4;
+    font-weight: bold;
+  }
+
+  /* 内置对象 / 类型 */
+  .md-typeset pre code .nb,
+  .md-typeset pre code .kt {
+    color: #0184bc;
+  }
+
+  /* 字符串 */
+  .md-typeset pre code .s,
+  .md-typeset pre code .sa,
+  .md-typeset pre code .sb,
+  .md-typeset pre code .sc {
+    color: #50a14f;
+  }
+
+  /* 数字 */
+  .md-typeset pre code .m {
+    color: #986801;
+  }
+
+  /* 函数 / 类名 */
+  .md-typeset pre code .nf,
+  .md-typeset pre code .nc {
+    color: #4078f2;
+  }
+
+  /* 注释 */
+  .md-typeset pre code .c,
+  .md-typeset pre code .c1,
+  .md-typeset pre code .cm {
+    color: #a0a1a7;
+    font-style: italic;
+  }
+}
+
+/* 🌙 暗色模式代码块样式 (One Dark) */
+@media (prefers-color-scheme: dark) {
+  .md-typeset pre code {
+    background-color: #282c34;  /* 深灰背景 */
+    color: #abb2bf;             /* 主文字颜色 */
+    border-radius: 6px;
+    padding: 0.75em;
+    line-height: 1.5;
+    font-size: 0.9em;
+  }
+
+  /* 关键字 */
+  .md-typeset pre code .k,
+  .md-typeset pre code .kd,
+  .md-typeset pre code .kn {
+    color: #c678dd;
+    font-weight: bold;
+  }
+
+  /* 内置对象 / 类型 */
+  .md-typeset pre code .nb,
+  .md-typeset pre code .kt {
+    color: #61afef;
+  }
+
+  /* 字符串 */
+  .md-typeset pre code .s,
+  .md-typeset pre code .sa,
+  .md-typeset pre code .sb,
+  .md-typeset pre code .sc {
+    color: #98c379;
+  }
+
+  /* 数字 */
+  .md-typeset pre code .m {
+    color: #d19a66;
+  }
+
+  /* 函数 / 类名 */
+  .md-typeset pre code .nf,
+  .md-typeset pre code .nc {
+    color: #e5c07b;
+  }
+
+  /* 注释 */
+  .md-typeset pre code .c,
+  .md-typeset pre code .c1,
+  .md-typeset pre code .cm {
+    color: #5c6370;
+    font-style: italic;
+  }
+}
