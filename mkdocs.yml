@@ -61,7 +61,9 @@ nav:
   - 🏠Home: index.md
   - 🐵程序员的数学: maths/math.md
   - 🦏语言大本营:
-      - Python: langs/python/basic.md
+      - Python:
+          - Python教程: langs/python/basic.md
+          - Pydantic: langs/python/Pydantic.md
       - C++: langs/c++/basic.md
   - 🐹算法大本营:
       - 基础: algorithm/basic.md
@@ -84,6 +86,8 @@ nav:
       - 数据分析综合项目实战: analysis/project.md
   - 🐴机器学习:
       - scikit-learn手册: machinelearning/scikit-learn/basic.md
+      - 机器学习:
+          - 第一章：特征工程: machinelearning/ml/features.md
   - 🐣深度学习:
       - Pytorch手册:
           - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md

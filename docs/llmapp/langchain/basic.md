@@ -325,13 +325,39 @@ except OutputParserException as e:
     print(f"解析错误: {e}")
 ```
 
-## 四、记忆和状态管理
+## 四、记忆模块
 
-LangChain中的记忆主要分为几类：
+### 4.1 记忆模块的基本概念
 
-+ **对话记忆**：存储对话历史
-+ **实体记忆**：存储关于特定实体的信息
-+ **自定义记忆**：根据需求创建的特定记忆类型
+记忆模块的主要功能是：
+
++ 存储历史对话信息
++ 管理对话上下文
++ 为后续交互提供相关背景
+
+记忆系统本质上是在对话过程中构建和更新知识，然后在生成响应时查询相关知识的系统。
+
+
+### 4.2 记忆模块的类型
+
+LangChain 提供了多种记忆类型，适用于不同场景：
+
+#### 1. 对话缓冲区 (ConversationBufferMemory)
+
+最简单的记忆形式，直接保存所有对话历史。
+
+```python
+from langchain.memory import ConversationBufferMemory
+
+memory = ConversationBufferMemory()
+memory.save_context({"input": "你好"}, {"output": "你好！有什么我可以帮忙的吗？"})
+memory.load_memory_variables({})  # 返回完整对话历史
+memory
+```
+
+#### 2. 对话缓冲区窗口 (ConversationBufferWindowMemory)
+
+只保留最近K轮对话，防止上下文过长。
 
 
 
