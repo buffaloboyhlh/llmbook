@@ -1,6 +1,8 @@
 # LangChain 教程
 
-## 一、 基础概念和环境设置
+## 一、 简介
+
+![简介](https://python.langchain.com/svg/langchain_stack_112024.svg)
 
 LangChain 建立在几个核心概念之上：
 
@@ -35,329 +37,110 @@ pip install langchain-huggingface
 使用示例：
 
 ```python
-from langchain_openai import ChatOpenAI
+from langchain.chat_models import init_chat_model
 
-llm = ChatOpenAI(
-    base_url="http://192.168.3.5:45299/v1",  # Ollama API 兼容 v1 接口
-    api_key="ollama-not-needed",  # Ollama 本地通常不需要 key，可随便写
-    model="deepseek-r1:1.5b",
-)
+llm = init_chat_model(model="deepseek-r1:1.5b", model_provider="ollama", base_url="http://192.168.3.5:11434/")
 
 response = llm.invoke("你是谁？")
-print(response)
+print(response.content)
 ```
 
-## 二、提示词工程
+!!! success "输出结果"
 
-### 2.1 消息（Messages）
+    您好！我是由中国的深度求索（DeepSeek）公司开发的智能助手DeepSeek-R1。如您有任何任何问题，我会尽我所能为您提供帮助。
 
-+ **作用**：提供不同类型的消息结构，用于构建聊天历史
+## 二、模型使用
 
-+ **常用消息类型：**
-    + SystemMessage：设置助手的行为指南
-    + HumanMessage：表示用户的输入
-    + AIMessage：表示AI的回复
-+ **参数说明：**
-    + content：消息的文本内容
+### 2.1  使用本地模型
+
+Ollama 是一个本地大语言模型（LLM）运行工具，它让你能在自己的电脑上快速运行大模型（像 LLaMA、Mistral、Gemma、Phi-3、Starling 等），并且提供类似于 ChatGPT 的交互体验。
+
+#### 1、文本模型
 
 ```python
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import SystemMessage,HumanMessage,AIMessage
+from langchain_ollama import OllamaLLM,ChatOllama
 
-llm = ChatOpenAI(
+llm = OllamaLLM(
     model="deepseek-r1:1.5b",
-    api_key="random-api-key",
-    base_url="http://192.168.3.5:45299/v1"
+    base_url="http://192.168.3.5:11434/"
+)
+
+llm.invoke("你是谁？")
+```
+!!! success "输出结果"
+    
+    '<think>\n\n</think>\n\n您好！我是由中国的深度求索（DeepSeek）公司开发的智能助手DeepSeek-R1。如您有任何任何问题，我会尽我所能为您提供帮助。'
+
+
+#### 2. 聊天模型
+
+```python
+from langchain_ollama import ChatOllama
+from langchain_core.messages import SystemMessage, HumanMessage
+
+chat = ChatOllama(
+    model="deepseek-r1:1.5b",
+    base_url="http://192.168.3.5:11434/"
 )
 
 messages = [
-    SystemMessage(content="你是一位有用的AI助手。"),
-    HumanMessage(content="我想了解人工智能的基础知识。"),
-    AIMessage(content="人工智能是计算机科学的一个分支，致力于创建能够执行通常需要人类智能的任务的系统。"),HumanMessage(content="什么事机器学习？")
+    SystemMessage(content="你是一名翻译助手，将用户的输入翻译成英语"),
+    HumanMessage(content="小明喜欢去中国旅游，有什么推荐的景点?"),
 ]
 
-response = llm.invoke(messages)
+response =  chat.invoke(messages)
 print(response.content)
 ```
-
-### 2.2 提示模版
-
-#### PromptTemplate 模块
-
-+ **作用：** 创建和格式化**文本**提示模板
-+ **常用方法：**
-    + from_template()：从模板字符串创建提示模板
-    + format()：格式化提示，将值替换到占位符
-+ **参数说明：**
-    + 模板字符串中使用 {**变量名**} 作为占位符
-
-```python
-from langchain import PromptTemplate
-
-prompt_template = PromptTemplate.from_template(
-    "请给我提供关于{主题}的详细信息。"  # 定义模板文本，使用{变量名}作为占位符
-)
-
-prompt = prompt_template.format(主题="深度学习")
-print(prompt) # 请给我提供关于机器学习的详细信息。
-
-respone = llm.invoke(prompt)
-print(respone.content)
-```
-
-#### ChatPromptTemplate 模块
-
-+ **作用：** 创建和格式化**聊天**提示模板
-+ **常用方法：**
-    - from_messages()：从消息列表创建聊天提示模板
-    - format_messages()：格式化聊天提示，生成消息列表
-+ **参数说明：**
-    - 接受 SystemMessage、HumanMessagePromptTemplate 等消息类型
-
-```python
-from langchain.prompts import ChatPromptTemplate,HumanMessagePromptTemplate,SystemMessagePromptTemplate
-
-teaching_template = ChatPromptTemplate.from_messages([
-    SystemMessagePromptTemplate.from_template("""你是一位精通{主题}的教学专家。你的目标是以简单易懂、循序渐进的方式教授{概念}。请记住以下教学原则：
-1. 从基础概念开始，逐步引入复杂内容
-2. 使用具体的例子和比喻来解释抽象概念
-3. 积极鼓励学习者，肯定他们的每一步进步
-4. 提供实践机会和互动式学习
-5. 适当检查理解程度，及时调整教学内容"""),
-    HumanMessagePromptTemplate.from_template("请教我{概念}的基本原理。我是一个{学习者水平}的学习者，特别感兴趣的方面是{兴趣点}。如果可能，请包含一些简单的练习让我实践。")
-])
-
-messages = teaching_template.format_messages(
-    主题="人工智能",
-    概念="深度学习",
-    学习者水平="初学者",
-    兴趣点="计算机视觉应用"
-)
-
-print("Messages".center(80, "="),'\n',messages)
-
-response = llm.invoke(messages)
-print("\n","输出结果".center(80, "="),'\n')
-print(response.content)
-```
-
-#### FewShotPromptTemplate 
-
-```python
-from langchain.prompts import FewShotPromptTemplate, PromptTemplate
-
-# 示例数据
-examples = [
-    {"name": "小明", "age": 18, "destination": "青春活力的城市，如上海、深圳"},
-    {"name": "李奶奶", "age": 70, "destination": "舒适休闲的景区，如杭州西湖、成都青城山"}
-]
-
-# 示例模板
-example_prompt = PromptTemplate(
-    input_variables=["name", "age", "destination"],
-    template="姓名: {name}\n年龄: {age}\n推荐目的地: {destination}"
-)
-
-# 创建FewShot模板
-few_shot_prompt = FewShotPromptTemplate(
-    examples=examples,
-    example_prompt=example_prompt,
-    suffix="姓名: {name}\n年龄: {age}\n推荐目的地:",
-    input_variables=["name", "age"]
-)
-
-# 格式化模板
-formatted_prompt = few_shot_prompt.format(name="小陈", age=22)
-print(formatted_prompt)
-```
-
-#### 自定义提示词模板
-
-```python
-from langchain.prompts import BasePromptTemplate
-
-class CustomPromptTemplate(BasePromptTemplate):
-    input_variables: list[str]
+!!! success "输出结果"
     
-    def format(self, **kwargs) -> str:
-        # 自定义格式化逻辑
-        return f"自定义前缀: {', '.join([f'{k}={v}' for k, v in kwargs.items()])}"
+    He likes traveling in China. What are your recommendations for the places to visit?
 
-# 使用自定义模板
-prompt = CustomPromptTemplate(input_variables=["a", "b"])
-print(prompt.format(a=1, b=2))
-# 输出: 自定义前缀: a=1, b=2
+
+### 2.2 使用第三方模型（Hugging Face为例） 
+
+使用Hugging Face平台上的模型
+
+```bash
+pip install langchain-huggingface
 ```
 
+langchain_huggingface 分成两种，一种下载模型到本地，在本地运行模型，一种使用hugging face 提供的模型api接口
 
-
-### 三、输出解析器
-
-#### 3.1 核心概念
-
-##### 1. 输出解析器（OutputParser）
-
-+ **作用：** 将 LLM 生成的文本转换为结构化数据。
-+ **核心方法：**
-    - parse(text: str)：将文本解析为目标格式。
-    - get_format_instructions()：返回格式说明，指导 LLM 生成符合要求的文本。
-
-##### 2. 常见解析器类型
-
-+ **结构化解析器：** 如 StructuredOutputParser、ResponseSchema。
-+ **JSON 解析器**：如 JsonOutputParser。
-+ **自定义解析器**：继承 BaseOutputParser 实现自定义逻辑。
-
-#### 3.2 StrOutputParser
+#### 使用本地模型
 
 ```python
-from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import StrOutputParser
+from langchain_huggingface import HuggingFacePipeline
 
-# 创建模型
-llm = ChatOpenAI(
-    base_url="http://192.168.3.5:45299/v1",  # Ollama API 兼容 v1 接口
-    api_key="ollama-not-needed",  # Ollama 本地通常不需要 key，可随便写
-    model="deepseek-r1:1.5b",
+llm = HuggingFacePipeline.from_model_id(
+    model_id="microsoft/Phi-3-mini-4k-instruct",
+    task="text-generation",
+    pipeline_kwargs={
+        "max_new_tokens": 100,
+        "top_k": 50,
+        "temperature": 0.1,
+    },
 )
-# 提示词
-prompt = PromptTemplate.from_template(
-    "给我5个关于{主题}的有趣事实。"  # 定义模板文本
+llm.invoke("Hugging Face is")
+```
+
+#### 使用在线模型
+
+```python
+from langchain_huggingface import HuggingFaceEndpoint
+
+llm = HuggingFaceEndpoint(
+    repo_id="meta-llama/Meta-Llama-3-8B-Instruct",
+    task="text-generation",
+    max_new_tokens=100,
+    do_sample=False,
 )
-
-# 创建输出解析器
-output_parser = StrOutputParser()  # 将模型输出解析为字符串
-
-chain = prompt | llm | output_parser
-
-# 调用链
-response = chain.invoke({"主题": "量子物理学"})  # 传入参数字典
-print(response)  # 打印链的输出
+llm.invoke("Hugging Face is")
 ```
 
-#### 3.3 JsonOutputParser
 
-```python
-from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.messages import SystemMessage, HumanMessage
-
-# 创建模型
-llm = ChatOpenAI(
-    base_url="http://192.168.3.5:45299/v1",  # Ollama API 兼容 v1 接口
-    api_key="ollama-not-needed",  # Ollama 本地通常不需要 key，可随便写
-    model="deepseek-r1:1.5b",
-)
-# 提示词
-prompt = ChatPromptTemplate.from_messages([
-    SystemMessage(content="请把以下信息输出为 JSON 格式"),
-    HumanMessage(content="名字：张三，年龄：25，爱好：读书和游泳")
-])
-
-# 创建输出解析器
-output_parser = JsonOutputParser()
-
-chain = prompt | llm | output_parser
-
-# 调用链
-response = chain.invoke({})  # 传入参数字典
-print(response)  # 打印链的输出
-```
-
-**输出**
-
-```text
-{'name': '张三', 'age': 25, '爱好': ['读书', '游泳']}
-```
-
-#### 3.4 自定义输出解析器
-
-自定义解析器需要实现以下核心部分：
-
-1. **继承 BaseOutputParser**：所有解析器必须继承该基类。
-2. **实现 parse 方法**：定义文本到目标格式的转换逻辑。
-3. **实现 get_format_instructions 方法**：返回格式说明，指导 LLM 生成符合要求的文本（可选但推荐）。
-
-**简单示例：解析逗号分隔的列表**
-```python
-from langchain_core.output_parsers import BaseOutputParser
-
-class CommaSeparatedListParser(BaseOutputParser):
-    """将逗号分隔的文本转换为列表"""
     
-    def parse(self, text: str) -> list[str]:
-        """解析文本为列表"""
-        return [item.strip() for item in text.split(",")]
     
-    def get_format_instructions(self) -> str:
-        """返回格式说明"""
-        return "请用逗号分隔多个项目（例如：苹果,香蕉,橙子）"
-
-# 使用示例
-parser = CommaSeparatedListParser()
-result = parser.parse("足球,篮球,乒乓球")
-print(result)  # 输出: ['足球', '篮球', '乒乓球']
-```
-
-**带错误处理的解析器**
-
-当解析失败时，可以抛出 OutputParserException：
-
-```python
-from langchain_core.output_parsers import BaseOutputParser, OutputParserException
-
-class NumberListParser(BaseOutputParser[list[int]]):
-    """解析由空格分隔的数字列表"""
     
-    def parse(self, text: str) -> list[int]:
-        try:
-            return [int(num.strip()) for num in text.split()]
-        except ValueError as e:
-            raise OutputParserException(f"无法将文本解析为数字列表: {text}") from e
-
-# 使用示例
-parser = NumberListParser()
-try:
-    result = parser.parse("1 2 3a 4")  # 触发异常
-except OutputParserException as e:
-    print(f"解析错误: {e}")
-```
-
-## 四、记忆模块
-
-### 4.1 记忆模块的基本概念
-
-记忆模块的主要功能是：
-
-+ 存储历史对话信息
-+ 管理对话上下文
-+ 为后续交互提供相关背景
-
-记忆系统本质上是在对话过程中构建和更新知识，然后在生成响应时查询相关知识的系统。
-
-
-### 4.2 记忆模块的类型
-
-LangChain 提供了多种记忆类型，适用于不同场景：
-
-#### 1. 对话缓冲区 (ConversationBufferMemory)
-
-最简单的记忆形式，直接保存所有对话历史。
-
-```python
-from langchain.memory import ConversationBufferMemory
-
-memory = ConversationBufferMemory()
-memory.save_context({"input": "你好"}, {"output": "你好！有什么我可以帮忙的吗？"})
-memory.load_memory_variables({})  # 返回完整对话历史
-memory
-```
-
-#### 2. 对话缓冲区窗口 (ConversationBufferWindowMemory)
-
-只保留最近K轮对话，防止上下文过长。
 
 
 
