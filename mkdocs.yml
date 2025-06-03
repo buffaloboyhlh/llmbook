@@ -93,6 +93,7 @@ nav:
       - scikit-learn手册: machinelearning/scikit-learn/basic.md
       - 机器学习:
           - 第一章：特征工程: machinelearning/ml/features.md
+          - 第二章：模型评估: machinelearning/ml/evaluate.md
   - 🐣深度学习:
       - Pytorch手册:
           - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
