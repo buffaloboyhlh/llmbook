@@ -37,6 +37,9 @@ theme:
 
 
 markdown_extensions:
+  - toc:
+        permalink: true
+        toc_depth: 3  # 控制显示从 h2 到 h3（默认是 1-6）
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -50,17 +53,15 @@ markdown_extensions:
         generic: true
 
 extra_javascript:
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - styles/js/tablesort.min.js
+  - styles/js/tex-mml-chtml.js
 
 plugins:
   - search
 
 extra_css:
-  - styles/extra.css
+  - styles/css/extra.css
+  - styles/css/custom-toc.css
 
 nav:
   - 🏠Home: index.md
@@ -94,7 +95,7 @@ nav:
       - 机器学习:
           - 第一章：特征工程: machinelearning/ml/features.md
           - 第二章：模型评估: machinelearning/ml/evaluate.md
-          - 第三章：监督学习模型: machinelearning/ml/supervisor.md
+          - 第三章：监督学习模型: machinelearning/ml/supervised.md
   - 🐣深度学习:
       - Pytorch手册:
           - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md

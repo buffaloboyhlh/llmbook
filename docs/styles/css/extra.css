@@ -1,19 +1,19 @@
 /* ========== Light Mode 标题配色 ========== */
-.md-typeset h1 { color: #004d40; }   /* Teal 900 */
-.md-typeset h2 { color: #00695c; }   /* Teal 800 */
-.md-typeset h3 { color: #00796b; }   /* Teal 700 */
-.md-typeset h4 { color: #00897b; }   /* Teal 600 */
-.md-typeset h5 { color: #4db6ac; }   /* Teal 300 */
-.md-typeset h6 { color: #80cbc4; }   /* Teal 200 */
+.md-typeset h1 { color: #0d47a1; }  /* Blue 900 */
+.md-typeset h2 { color: #1565c0; }  /* Blue 800 */
+.md-typeset h3 { color: #512da8; }  /* Deep Purple 700 */
+.md-typeset h4 { color: #7b1fa2; }  /* Purple 700 */
+.md-typeset h5 { color: #c2185b; }  /* Pink 700 */
+.md-typeset h6 { color: #616161; }  /* Grey 700 */
 
 /* ========== Dark Mode 标题配色 ========== */
 @media (prefers-color-scheme: dark) {
-  .md-typeset h1 { color: #e0f2f1; }  /* Teal 50 */
-  .md-typeset h2 { color: #b2dfdb; }  /* Teal 100 */
-  .md-typeset h3 { color: #80cbc4; }  /* Teal 200 */
-  .md-typeset h4 { color: #4db6ac; }  /* Teal 300 */
-  .md-typeset h5 { color: #26a69a; }  /* Teal 400 */
-  .md-typeset h6 { color: #009688; }  /* Teal 500 */
+  .md-typeset h1 { color: #bbdefb; }  /* Blue 100 */
+  .md-typeset h2 { color: #90caf9; }  /* Blue 200 */
+  .md-typeset h3 { color: #b39ddb; }  /* Deep Purple 200 */
+  .md-typeset h4 { color: #ce93d8; }  /* Purple 200 */
+  .md-typeset h5 { color: #f48fb1; }  /* Pink 200 */
+  .md-typeset h6 { color: #bdbdbd; }  /* Grey 400 */
 }
 
 /* 正文文字优化 */
@@ -175,5 +175,41 @@
   .md-typeset pre code .cm {
     color: #5c6370;
     font-style: italic;
+  }
+}
+
+/* ========== Light Mode 标题配色 ========== */
+.md-typeset h1 {
+  color: #004d40;
+  text-align: center; /* 居中 */
+}
+
+/* ========== Dark Mode 标题配色 ========== */
+@media (prefers-color-scheme: dark) {
+  .md-typeset h1 {
+    color: #e0f2f1;
+    text-align: center; /* 居中 */
+  }
+}
+
+/* ========== Light Mode h3 渐变背景样式 ========== */
+.md-typeset h3 {
+  background: linear-gradient(90deg, #ede7f6, #d1c4e9);  /* 淡紫到浅紫渐变 */
+  color: #512da8;                /* Deep Purple 700 */
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 1.5em;
+}
+
+/* ========== Dark Mode h3 渐变背景样式 ========== */
+@media (prefers-color-scheme: dark) {
+  .md-typeset h3 {
+    background: linear-gradient(90deg, #311b92, #512da8);  /* 深紫渐变 */
+    color: #e0e0ff;                /* 浅紫字色 */
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 1.5em;
   }
 }
