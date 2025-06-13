@@ -98,6 +98,9 @@ nav:
           - 第三章：监督学习模型: machinelearning/ml/supervised.md
           - 第四章：降维: machinelearning/ml/dimension.md
           - 第五章：非监督学习: machinelearning/ml/unsupervised.md
+          - 第六章：概率图模型: machinelearning/ml/pgm.md
+          - 第七章：优化算法: machinelearning/ml/optiom.md
+          - 第八章：采样: machinelearning/ml/sample.md
   - 🐣深度学习:
       - Pytorch手册:
           - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
