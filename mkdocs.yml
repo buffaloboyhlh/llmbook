@@ -104,6 +104,8 @@ nav:
           - 第九章：前向神经网络: machinelearning/ml/forward.md
           - 第十章：循环神经网络: machinelearning/ml/rnn.md
           - 第十一章：强化学习: machinelearning/ml/rl.md
+          - 第十二章：集成学习: machinelearning/ml/ensemble.md
+          - 第十三章：生成式对抗网络: machinelearning/ml/gan.md
   - 🐣深度学习:
       - Pytorch手册:
           - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
