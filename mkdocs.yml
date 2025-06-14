@@ -101,6 +101,9 @@ nav:
           - 第六章：概率图模型: machinelearning/ml/pgm.md
           - 第七章：优化算法: machinelearning/ml/optiom.md
           - 第八章：采样: machinelearning/ml/sample.md
+          - 第九章：前向神经网络: machinelearning/ml/forward.md
+          - 第十章：循环神经网络: machinelearning/ml/rnn.md
+          - 第十一章：强化学习: machinelearning/ml/rl.md
   - 🐣深度学习:
       - Pytorch手册:
           - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
