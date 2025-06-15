@@ -190,6 +190,118 @@ print(f"平均奖励: {np.mean(rewards):.3f}")
 
 ### 1.3 马尔可夫决策过程
 
+#### 1️⃣ 什么是马尔可夫决策过程？
+
+
+马尔可夫决策过程（MDP）是强化学习中建模环境和智能体交互行为的数学框架。  
+其核心思想是：
+
+> 一个智能体在每个时刻处于某个状态中，根据策略选择动作，环境根据动作转移到新状态并给予奖励。
+
+
+#### 2️⃣ MDP 的五元组定义
+
+MDP 通常由以下五部分组成：
+
+| 符号 | 含义 |
+|------|------|
+| \( S \) | 状态空间（States）：环境中所有可能的状态集合 |
+| \( A \) | 动作空间（Actions）：智能体在每个状态可采取的动作集合 |
+| \( P(s' \mid s, a) \) | 状态转移概率：在状态 \(s\) 下采取动作 \(a\) 转移到状态 \(s'\) 的概率 |
+| \( R(s, a) \) | 奖励函数：采取动作 \(a\) 后获得的即时奖励 |
+| \( \gamma \) | 折扣因子（Discount factor）：未来奖励的重要性，取值 \(0 \leq \gamma \leq 1\) |
+
+
+#### 3️⃣ 马尔可夫性（Markov Property）
+
+MDP 满足马尔可夫性质：
+
+> 当前状态的转移概率只与当前状态和当前动作有关，与过去历史无关。
+
+数学表达式如下：
+
+\[
+P(s_{t+1} \mid s_t, a_t) = P(s_{t+1} \mid s_1, a_1, \dots, s_t, a_t)
+\]
+
+
+#### 4️⃣ 目标：最优策略
+
+目标是找到一个策略 \( \pi \)，使得期望累积奖励最大化：
+
+\[
+\pi^* = \arg\max_{\pi} \mathbb{E}_\pi \left[ \sum_{t=0}^{\infty} \gamma^t R(s_t, a_t) \right]
+\]
+
+#### 5️⃣ 值函数（Value Function）
+
+##### 5.1 状态值函数 \( V^\pi(s) \)
+
+\[
+V^\pi(s) = \mathbb{E}_\pi \left[ \sum_{t=0}^\infty \gamma^t R(s_t, a_t) \mid s_0 = s \right]
+\]
+
+##### 5.2 动作值函数 \( Q^\pi(s, a) \)
+
+\[
+Q^\pi(s,a) = \mathbb{E}_\pi \left[ \sum_{t=0}^\infty \gamma^t R(s_t, a_t) \mid s_0 = s, a_0 = a \right]
+\]
+
+#### 6️⃣ 贝尔曼方程（Bellman Equation）
+
+
+##### 6.1 策略下的贝尔曼方程：
+
+\[
+V^\pi(s) = \sum_{a} \pi(a|s) \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V^\pi(s') \right]
+\]
+
+##### 6.2 最优贝尔曼方程：
+
+\[
+V^*(s) = \max_a \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V^*(s') \right]
+\]
+
+#### 7️⃣ 求解 MDP 的方法
+
+##### 7.1 动态规划（DP）类（已知模型）
+
+- 值迭代（Value Iteration）
+- 策略迭代（Policy Iteration）
+
+##### 7.2 强化学习（RL）类（未知模型）
+
+- Q-learning
+- SARSA
+- DQN（深度 Q 网络）
+
+#### 8️⃣ 代码示例（FrozenLake）
+
+```python
+import gym
+import numpy as np
+
+env = gym.make("FrozenLake-v1", is_slippery=False)
+n_states = env.observation_space.n
+n_actions = env.action_space.n
+
+V = np.zeros(n_states)
+gamma = 0.9
+
+# 值迭代
+for i in range(1000):
+    V_prev = V.copy()
+    for s in range(n_states):
+        Q_sa = []
+        for a in range(n_actions):
+            q = 0
+            for prob, s_prime, reward, done in env.P[s][a]:
+                q += prob * (reward + gamma * V_prev[s_prime])
+            Q_sa.append(q)
+        V[s] = max(Q_sa)
+    if np.max(np.abs(V - V_prev)) < 1e-4:
+        break
+```
 
 
 ## 二、强化学习进阶
