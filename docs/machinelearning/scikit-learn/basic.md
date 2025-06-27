@@ -454,6 +454,7 @@ plt.show()
 | `fetch_california_housing()` | 加州房价数据（回归） |
 
 这些函数通常用于：
+
 - 自然语言处理（如 `fetch_20newsgroups`）
 - 图像识别（如人脸识别数据集）
 - 实际回归与分类建模问题

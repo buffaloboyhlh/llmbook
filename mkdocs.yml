@@ -92,7 +92,17 @@ nav:
       - 数据分析综合项目实战: analysis/project.md
   - 🐴机器学习:
       - scikit-learn手册: machinelearning/scikit-learn/basic.md
-      - 机器学习:
+      - 机器学习教程:
+          - 第一章：机器学习基础概念: machinelearning/ml-tutorial/01-机器学习基础概念.md
+          - 第二章：数据预处理与特征工程: machinelearning/ml-tutorial/02- 数据预处理与特征工程.md
+          - 第三章：常用监督学习模型: machinelearning/ml-tutorial/03-常用监督学习模型.md
+          - 第四章：非监督学习模型: machinelearning/ml-tutorial/04-非监督学习模型.md
+          - 第五章：模型优化与正则化: machinelearning/ml-tutorial/05-模型优化与正则化.md
+          - 第六章：集成学习与提升方法: machinelearning/ml-tutorial/06-集成学习与提升方法.md
+          - 第七章：模型评估与可解释性: machinelearning/ml-tutorial/07-模型评估与可解释性.md
+          - 第八章：模型保存和部署: machinelearning/ml-tutorial/08-模型保存和部署.md
+          - 第九章：自动化工具:  machinelearning/ml-tutorial/09-自动化工具.md
+      - 机器学习面试:
           - 第一章：特征工程: machinelearning/ml/features.md
           - 第二章：模型评估: machinelearning/ml/evaluate.md
           - 第三章：监督学习模型: machinelearning/ml/supervised.md
@@ -106,6 +116,8 @@ nav:
           - 第十一章：强化学习: machinelearning/ml/rl.md
           - 第十二章：集成学习: machinelearning/ml/ensemble.md
           - 第十三章：生成式对抗网络: machinelearning/ml/gan.md
+      - 机器学习实战:
+          - knn: machinelearning/ml-action/knn.md
   - 🐣深度学习:
       - Pytorch手册:
           - Pytorch张量、自动求导和GPU:  deeplearning/pytorch/tensor.md
