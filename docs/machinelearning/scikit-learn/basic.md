@@ -125,3 +125,101 @@ sklearn.datasets 提供了：
 | `make_sparse_spd_matrix()` | 生成稀疏对称正定矩阵（如图模型结构） |
 
 
+### 2. sklearn.model_selection
+
+#### 📌 一、model_selection 是什么？
+
+这是 scikit-learn 中负责：
+
++	数据划分（训练集/测试集）
++	模型评估（交叉验证）
++	超参数搜索（网格搜索、随机搜索）
++	模型选择与验证策略的核心模块
+
+
+#### 🧩 二、常用功能分类与作用
+
+| 功能类别 | 常用函数 | 作用 |
+|----------|----------|------|
+| 数据集划分 | `train_test_split` | 训练集 / 测试集划分 |
+| 交叉验证 | `cross_val_score`, `cross_validate`, `KFold`, `StratifiedKFold` | 多折评估模型 |
+| 超参数搜索 | `GridSearchCV`, `RandomizedSearchCV` | 网格/随机搜索参数 |
+| 学习曲线 | `learning_curve`, `validation_curve` | 模型学习过程可视化 |
+| 预定义验证 | `ShuffleSplit`, `LeaveOneOut` 等 | 控制验证集划分方式 |
+
+
+#### ✂️ 三、数据划分：train_test_split()
+
+```python
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                    test_size=0.2,
+                                                    random_state=42,
+                                                    stratify=y)
+```
+
++	test_size：测试集比例（如 0.2）
++	stratify=y：按标签比例分层采样（分类常用）
+
+
+#### 🔁 四、交叉验证
+
+##### 1️⃣ cross_val_score()
+
+快速评估模型交叉验证得分：
+
+```python
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+scores = cross_val_score(LogisticRegression(), X, y, cv=5)
+print("平均准确率：", scores.mean())
+```
+
+##### 2️⃣ cross_validate()（支持更多输出）
+
+```python
+from sklearn.model_selection import cross_validate
+
+result = cross_validate(LogisticRegression(), X, y,
+                        scoring=['accuracy', 'f1_macro'],
+                        return_train_score=True,
+                        cv=5)
+print(result)
+```
+
+#### 🔀 五、交叉验证策略类（KFold 等）
+
+| 类名 | 说明 |
+|------|------|
+| `KFold` | 简单均匀划分为 K 折 |
+| `StratifiedKFold` | 保持类别分布的 K 折（适用于分类问题） |
+| `ShuffleSplit` | 多次随机划分训练/测试集 |
+| `LeaveOneOut` | 留一法（每次留一个样本做测试集） |
+| `GroupKFold` | 按组划分，确保同一组数据不在训练和验证集中同时出现 |
+
+
+```python
+from sklearn.model_selection import StratifiedKFold
+
+skf = StratifiedKFold(n_splits=5)
+for train_idx, test_idx in skf.split(X, y):
+    print(train_idx, test_idx)
+```
+
+#### 🔍 六、超参数搜索
+
+##### ✅ GridSearchCV（网格搜索）
+
+```python
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+
+param_grid = {'C': [0.1, 1, 10], 'kernel': ['linear', 'rbf']}
+grid = GridSearchCV(SVC(), param_grid, cv=5)
+grid.fit(X_train, y_train)
+
+print("最优参数：", grid.best_params_)
+print("最优得分：", grid.best_score_)
+```
