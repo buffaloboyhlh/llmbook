@@ -550,5 +550,61 @@ print("ARI:", adjusted_rand_score(labels_true, labels_pred))
 - `labels=`：指定参与计算的标签类别索引
 
 
-### 5. sklearn.linear_model
+## 第三部分：分类算法
+
+### 1. Logistic Regression
+
+### 2. K-近邻（KNN）
+
+### 3. 决策树
+
+### 4. 随机森林
+
+### 5. 支持向量机（SVM）
+
+### 6. 朴素贝叶斯
+
+### 7. XGBoost / LightGBM
+
+
+## 第四部分：回归算法
+
+### 1. 线性回归
+
+### 2. 决策树回归
+
+### 3. 岭回归（L2）
+
+### 4. Lasso 回归（L1）
+
+### 5. 支持向量回归（SVR）
+
+### 6. 随机森林回归
+
+### 7. XGBoost 回归
+
+
+## 第五部分：聚类算法
+
+### 1. KMeans
+
+### 2. DBSCAN
+
+### 3. 层次聚类
+
+### 4. 高斯混合模型（GMM）
+
+## 第六部分：降维
+
+### 1. PCA 主成分分析
+
+
+### 2. LDA 线性判别分析
+
+### 3. t-SNE
+
+### 4. UMAP
+
+
+
 
