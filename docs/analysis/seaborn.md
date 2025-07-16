@@ -1,197 +1,132 @@
-### 1、Seaborn介绍
+# Seaborn 教程
 
-Seaborn是基于matplotlib的图形可视化python包。它提供了一种高度交互式界面，便于用户能够做出各种有吸引力的统计图表。
+## 一、简介
 
-Seaborn是在matplotlib的基础上进行了更高级的API封装，从而使得作图更加容易，在大多数情况下使用seaborn能做出很具有吸引力的图，而使用matplotlib就能制作具有更多特色的图。应该把Seaborn视为matplotlib的补充，而不是替代物。
+Seaborn 是基于 Matplotlib 构建的高级可视化库，专为 统计图表 而设计。相比 Matplotlib，它更美观、更易用，尤其适合数据分析工作流。
 
-### 2、安装
++ 官网：https://seaborn.pydata.org
++ 核心优势：更美观的默认样式、对 Pandas DataFrame 友好、支持分类数据与统计图
 
-pip install seaborn -i https://pypi.tuna.tsinghua.edu.cn/simple
+##  二、安装
 
-[教程](https://blog.csdn.net/Soft_Po/article/details/118605172)
-
-### 3、快速上手
-
-#### 3.1、样式设置
-
-```Python
-import seaborn as sns
-sns.set(style = 'darkgrid',context = 'talk',font = 'STKaiti')
+```bash
+pip install seaborn
 ```
 
-stlyle设置，修改主题风格，属性如下：
+## 三、快速使用
 
-| style     | 效果                 |
-| --------- | -------------------- |
-| darkgrid  | 黑色网格（默认）     |
-| whitegrid | 白色网格             |
-| dark      | 黑色背景             |
-| white     | 白色背景             |
-| ticks     | 四周有刻度线的白背景 |
-
-context设置，修改大小，属性如下：
-
-| context          | 效果             |
-| ---------------- | ---------------- |
-| paper            | 越来越大越来越粗 |
-| notebook（默认） | 越来越大越来越粗 |
-| talk             | 越来越大越来越粗 |
-| poster           | 越来越大越来越粗 |
-
-#### 3.2、线形图
-
-```Python
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
-sns.set(style = 'dark',context = 'poster',font = 'STKaiti') # 设置样式
-plt.figure(figsize=(9,6))
 
-x = np.linspace(0,2*np.pi,20)
-y = np.sin(x)
+# 加载内置数据集
+tips = sns.load_dataset("tips")
 
-sns.lineplot(x = x,y = y,color = 'green',ls = '--')
-sns.lineplot(x = x,y = np.cos(x),color = 'red',ls = '-.')
+# 可视化
+sns.scatterplot(x="total_bill", y="tip", data=tips)
+plt.title("账单与小费关系")
+plt.show()
 ```
 
-![](./images/1-seaborn-线形图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/c3c3f5a8880640c0919c30115e7b46c2.png)
+## 四、常用图表类型
 
-### 4、各种图形绘制
+| 图表类型       | 函数名                | 描述                          |
+|----------------|-----------------------|-------------------------------|
+| 散点图         | `sns.scatterplot()`   | 两个数值型变量的关系         |
+| 折线图         | `sns.lineplot()`      | 趋势线                       |
+| 柱状图         | `sns.barplot()`       | 类别 → 数值的平均             |
+| 条形图         | `sns.countplot()`     | 类别 → 频数                  |
+| 箱线图         | `sns.boxplot()`       | 展示中位数、四分位数、异常值 |
+| 小提琴图       | `sns.violinplot()`    | 类似箱线图但带 KDE 曲线       |
+| 分布图         | `sns.histplot()`      | 直方图                       |
+| KDE 密度图     | `sns.kdeplot()`       | 分布的核密度估计             |
+| 热力图         | `sns.heatmap()`       | 数据矩阵热度图               |
+| 配对图         | `sns.pairplot()`      | 所有变量两两可视化           |
+| 分面图（子图） | `sns.FacetGrid()`     | 多子图分组展示               |
+| 条件回归图     | `sns.lmplot()`        | 散点 + 回归线                |
 
-#### 4.1、调色板
 
-参数palette（调色板），用于调整颜色，系统默认提供了六种选择：`deep, muted, bright, pastel, dark, colorblind`
+## 五、内置数据集与风格设置
 
-参数palette调色板，可以有更多的颜色选择，Matplotlib为我们提供了多大178种，这足够绘图用，可以通过代码**print(plt.colormaps())**查看选择
+```python
+# 加载数据集
+df = sns.load_dataset("iris")  # 还有 tips、flights、titanic 等
 
-| 178种    |
-| -------- |
-| Accent   |
-| Accent_r |
-| Blues    |
-| Blues_r  |
-| ……     |
-
-#### 4.2、线形图
-
-```Python
-import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
-sns.set(style = 'dark',context = 'notebook',font = 'STKaiti') # 设置样式
-plt.figure(figsize=(9,6))
-fmri = pd.read_csv('./fmri.csv') # fmri这一核磁共振数据
-
-ax = sns.lineplot(x = 'timepoint',y = 'signal',
-                  hue = 'event',style = 'event' ,
-                  data= fmri,
-                  palette='deep',
-                  markers=True,
-                  markersize = 10)
-
-plt.xlabel('时间节点',fontsize = 30)
-plt.savefig('./线形图.png',dpi = 200)
+# 设置风格
+sns.set_style("whitegrid")  # white, dark, ticks
+sns.set_palette("pastel")   # 可选 deep, bright, dark, colorblind
 ```
 
-lineplot()函数作用是绘制**线型图**。参数x、y，表示**横纵**坐标；参数hue，表示根据属性**分类**绘制**两条线**（"event"属性分两类"stim"、"cue"）；参数style，表示根据属性分类设置**样式**，实线和虚线；参数data，表示**数据**；参数marker、markersize，分别表示画图**标记点**以及尺寸**大小**！
+## 六、分类图表：分类变量 VS 数值变量
 
-![](./images/2-seaborn-线形图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/d8175123d3ae4b098ac83e688d4479b1.png)
+```python
+# 箱线图
+sns.boxplot(x="day", y="total_bill", data=tips)
 
-#### 4.3、散点图
+# 小提琴图
+sns.violinplot(x="day", y="total_bill", data=tips)
 
-```Python
-import matplotlib.pyplot as plt
-import seaborn as sns
-data = pd.read_csv('./tips.csv') # 小费
-plt.figure(figsize=(9,6))
-sns.set(style = 'darkgrid',context = 'talk')
+# 条形图（平均值）
+sns.barplot(x="day", y="total_bill", data=tips)
+
+# 计数图（频数）
+sns.countplot(x="day", data=tips)
+```
+
+## 七、数值变量分布分析
+
+```python
+# 单变量分布
+sns.histplot(tips["total_bill"], kde=True)
+
+# 核密度估计（KDE）
+sns.kdeplot(data=tips["tip"], shade=True)
+```
+
+## 八、变量关系探索
+
+```python
 # 散点图
-fig = sns.scatterplot(x = 'total_bill', y = 'tip', 
-                      hue = 'time', data = data, 
-                      palette = 'autumn', s = 100)
+sns.scatterplot(x="total_bill", y="tip", hue="sex", data=tips)
+
+# 带回归线的图（线性模型）
+sns.lmplot(x="total_bill", y="tip", hue="sex", data=tips)
+
+# 多变量分布（成对变量）
+sns.pairplot(tips, hue="sex")
 ```
 
-![](./images/3-seaborn-散点图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/bb23e7ea4966430a97d6ee7c51588025.png)
+##  九、热力图与透视表
 
-#### 4.4、柱状图
+```python
+# 创建透视表
+pivot = tips.pivot_table(values="tip", index="day", columns="time", aggfunc="mean")
 
-```Python
-import seaborn as sns
-import matplotlib.pyplot as plt
-plt.figure(figsize = (9,6))
-sns.set(style = 'whitegrid')
-tips = pd.read_csv('./tips.csv') # 小费
-ax = sns.barplot(x = "day", y = "total_bill", 
-                 data = tips,hue = 'sex',
-                 palette = 'colorblind',
-                 capsize = 0.2)
+# 热力图
+sns.heatmap(pivot, annot=True, cmap="YlGnBu")
 ```
 
-![](./images/4-seaborn-柱状图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/d98bc105698a492cbf0566c270f5b459.png)
+##  十、子图布局（FacetGrid）
 
-#### 4.5、箱式图
-
-```Python
-import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
-sns.set(style = 'ticks')
-tips = pd.read_csv('./tips.csv')
-ax = sns.boxplot(x="day", y="total_bill", data=tips,palette='colorblind')
+```python
+g = sns.FacetGrid(tips, col="sex", row="time")
+g.map(sns.histplot, "total_bill")
 ```
 
-![](./images/5-seaborn-箱式图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/fbae898cb5aa4e29ac2363a0803b63ed.png)
+## 十一、自定义美化
 
-#### 4.6、直方图
+```python
+sns.set_context("notebook")  # 其他：paper, talk, poster
+sns.set_style("darkgrid")
 
-```Python
-import seaborn as sns
-import numpy as np
-import matplotlib.pyplot as plt
-sns.set(style = 'dark')
-x = np.random.randn(5000)
-sns.histplot(x,kde = True)
+# 自定义调色板
+sns.set_palette("Set2")
 ```
 
-![](./images/6-seaborn-直方图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/3377301baf63428e924ce84a5bc5453c.png)
+##  十二、保存图像
 
-```Python
-import seaborn as sns
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-sns.set(style = 'darkgrid')
-tips = pd.read_csv('./tips.csv')
-sns.histplot(x = 'total_bill', data = tips, kde = True)
+```python
+plt.savefig("seaborn_plot.png", dpi=300, bbox_inches="tight")
 ```
 
-![](./images/7-seaborn-直方图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/0dc0222737d14366823febd4753ca581.png)
-
-#### 4.7、分类散点图
-
-```Python
-import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
-sns.set(style = 'darkgrid')
-exercise = pd.read_csv('./exercise.csv')
-sns.catplot(x="time", y="pulse", hue="kind", data=exercise)
-```
-
-![](./images/8-seaborn-分类散点图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/3fad4f88e96e429d97f4e8c9f60ecf6a.png)
-
-#### 4.8、热力图
-
-```Python
-import matplotlib.pyplot as plt
-import seaborn as sns
-plt.figure(figsize=(12,9))
-flights = pd.read_csv('./flights.csv')
-
-flights = flights.pivot("month", "year", "passengers")
-sns.heatmap(flights, annot=True,fmt = 'd',cmap = 'RdBu_r',
-            linewidths=0.5)
-```
-
-![](./images/9-seaborn-热力图.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/463/1651050856008/61d08363631f4626971321fd25d65d1b.png)
