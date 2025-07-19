@@ -91,6 +91,8 @@ nav:
       - Seaborn: analysis/seaborn.md
       - Scikit-plot: analysis/Scikit-plot.md
       - Python-igraph: analysis/python-igraph.md
+      - pyecharts: analysis/pyecharts.md
+      - Plotly: analysis/Plotly.md
       - 数据分析综合项目实战: analysis/project.md
   - 🐴机器学习:
       - scikit-learn手册: machinelearning/scikit-learn/basic.md
