@@ -130,3 +130,128 @@ sns.set_palette("Set2")
 plt.savefig("seaborn_plot.png", dpi=300, bbox_inches="tight")
 ```
 
+
+## 十三、实战
+
+#### 1. 散点图
+
+| 参数         | 说明                                         |
+|--------------|----------------------------------------------|
+| `x`, `y`     | 指定要绘制的变量名                           |
+| `data`       | pandas DataFrame 数据源                      |
+| `hue`        | 根据类别变量设置点的颜色（自动生成图例）     |
+| `style`      | 设置点的样式（如圆形、三角等）               |
+| `size`       | 设置点的大小                                 |
+| `palette`    | 设置颜色调色板（如 `"pastel"`、`"deep"`）     |
+| `alpha`      | 设置透明度（0~1）                             |
+| `s`          | 设置所有点的固定大小（如果不使用 `size`）     |
+| `marker`     | 设置统一点的形状，如 `"o"`、`"s"`、`"^"` 等   |
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = ['STHeiTi']
+
+# 加载示例数据集
+tips = sns.load_dataset("tips")
+# 绘制散点图：总账单 vs 小费
+sns.scatterplot(x='total_bill',y='tip',data=tips,hue="sex") # hue 更具性别设置不同颜色
+plt.title('散点图')
+plt.show()
+```
+![散点图.png](../imgs/seaborn/%E6%95%A3%E7%82%B9%E5%9B%BE.png)
+
+**带 style样式**
+
+style="smoker" 用 smoker 列的值区分点的形状，增强分类信息
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = ['STHeiTi']
+
+# 加载示例数据集
+tips = sns.load_dataset("tips")
+# 绘制散点图：总账单 vs 小费
+sns.scatterplot(x='total_bill',y='tip',data=tips,hue="sex",style="smoker") # hue 更具性别设置不同颜色
+plt.title('散点图')
+plt.show()
+```
+![带样式散点图.png](../imgs/seaborn/%E5%B8%A6%E6%A0%B7%E5%BC%8F%E6%95%A3%E7%82%B9%E5%9B%BE.png)
+
+
+#### 2.折线图 
+
+| 参数       | 说明                                            |
+|------------|-------------------------------------------------|
+| `x`, `y`   | 指定横轴和纵轴的数据列名                        |
+| `data`     | DataFrame 数据源                                 |
+| `hue`      | 根据分类变量分组，画多条线，每条线不同颜色       |
+| `style`    | 根据分类变量设置线条样式（如虚线、点线等）       |
+| `size`     | 控制线的粗细（可根据变量变化）                   |
+| `markers`  | 是否显示点标记，或传入具体的样式（如 `True` 或 `['o','s']`） |
+| `dashes`   | 设置虚线样式（如 `[True, False]`）               |
+| `palette`  | 设置调色板，如 `"pastel"`、`"deep"`              |
+
+```python
+sns.lineplot(x="size", y="tip", hue="sex", style="smoker", data=tips, markers=True)
+```
+
++ hue="sex"：男女使用不同颜色
++ style="smoker"：吸烟与否使用不同线型
++ markers=True：在数据点位置加上点标记
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams['font.family'] = ['STHeiTi']
+
+# 示例数据
+tips = sns.load_dataset("tips")
+
+# 折线图：x=人数，y=小费
+sns.lineplot(x="size", y="tip", data=tips)
+
+plt.title("线性趋势：就餐人数 vs 小费")
+plt.show()
+```
+
+![折线图.png](../imgs/seaborn/%E6%8A%98%E7%BA%BF%E5%9B%BE.png)
+
+**误差线（error bar）或误差带（误差阴影区域）**
+
+| 用法                  | 效果说明                                       |
+|-----------------------|------------------------------------------------|
+| `errorbar=None`       | 不显示误差线，只画折线                         |
+| `errorbar='sd'`       | 显示标准差的误差带                             |
+| `errorbar=('ci', 95)` | 显示 95% 的置信区间（默认行为）                |
+| `errorbar=('pi', 90)` | 显示 90% 的预测区间（Seaborn 0.12+ 支持）      |
+| `errorbar=('se', 1)`  | 显示 1 倍标准误差                              |
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams['font.family'] = ['STHeiTi']
+
+# 示例数据
+tips = sns.load_dataset("tips")
+
+# 折线图：x=人数，y=小费
+sns.lineplot(x="size", y="tip", data=tips,errorbar=None)
+
+plt.title("线性趋势：就餐人数 vs 小费")
+plt.show()
+```
+![折线图带error.png](../imgs/seaborn/%E6%8A%98%E7%BA%BF%E5%9B%BE%E5%B8%A6error.png)
+
+#### 3. 柱状图
+
+
+
+
