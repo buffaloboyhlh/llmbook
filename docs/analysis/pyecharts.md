@@ -211,6 +211,33 @@ funnel.render_notebook()
 ```
 ![漏斗图示例.png](../imgs/pyecharts/%E6%BC%8F%E6%96%97%E5%9B%BE%E7%A4%BA%E4%BE%8B.png)
 
+### 散点图
+
+```python
+from pyecharts.charts import *
+from pyecharts.globals import *
+import pyecharts.options as opts 
+import random
+
+x_data = [i for i in range(50)]
+y_data = [random.randint(0, 100) for _ in range(50)]
+
+scatter = (
+    Scatter(init_opts=opts.InitOpts(
+        theme=ThemeType.LIGHT,
+        bg_color="white"
+    ))
+    .add_xaxis(x_data)
+    .add_yaxis("",y_axis=y_data)
+    .set_global_opts(title_opts=opts.TitleOpts(title="基础散点图"),
+                     xaxis_opts=opts.AxisOpts(type_="value"),
+                     yaxis_opts=opts.AxisOpts(type_="value"),
+                     toolbox_opts=opts.ToolboxOpts())
+)
+
+scatter.render_notebook()
+```
+![基础散点图.png](../imgs/pyecharts/%E5%9F%BA%E7%A1%80%E6%95%A3%E7%82%B9%E5%9B%BE.png)
 
 
 
