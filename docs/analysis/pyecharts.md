@@ -230,14 +230,198 @@ scatter = (
     .add_xaxis(x_data)
     .add_yaxis("",y_axis=y_data)
     .set_global_opts(title_opts=opts.TitleOpts(title="基础散点图"),
-                     xaxis_opts=opts.AxisOpts(type_="value"),
-                     yaxis_opts=opts.AxisOpts(type_="value"),
-                     toolbox_opts=opts.ToolboxOpts())
+                     xaxis_opts=opts.AxisOpts(type_="value",splitline_opts=opts.SplitLineOpts()),
+                     yaxis_opts=opts.AxisOpts(type_="value",splitline_opts=opts.SplitLineOpts()),
+                     toolbox_opts=opts.ToolboxOpts(),
+                     visualmap_opts=opts.VisualMapOpts(),
+                )
 )
 
 scatter.render_notebook()
 ```
 ![基础散点图.png](../imgs/pyecharts/%E5%9F%BA%E7%A1%80%E6%95%A3%E7%82%B9%E5%9B%BE.png)
+
+### set_global_opts 
+
+| 参数名              | 类型            | 说明                                                                 |
+|---------------------|-----------------|----------------------------------------------------------------------|
+| title_opts          | TitleOpts       | 设置图表主标题和副标题，如位置、字体、颜色等                       |
+| legend_opts         | LegendOpts      | 设置图例相关属性，如位置、方向、是否显示等                         |
+| tooltip_opts        | TooltipOpts     | 设置悬浮提示框属性，如触发方式、格式等                             |
+| toolbox_opts        | ToolboxOpts     | 设置工具箱（右上角下载图、缩放等功能按钮）                         |
+| visualmap_opts      | VisualMapOpts   | 设置视觉映射组件（通常用于热度图、散点图等，显示颜色-数值映射）   |
+| xaxis_opts          | AxisOpts        | 设置 X 轴属性（如坐标轴线、刻度、标签、是否显示网格线等）          |
+| yaxis_opts          | AxisOpts        | 设置 Y 轴属性（同上）                                                |
+| datazoom_opts       | DataZoomOpts    | 设置缩放组件（图表内缩放滚动）                                     |
+| brush_opts          | BrushOpts       | 设置区域选择组件（用于框选数据）                                   |
+| axispointer_opts    | AxisPointerOpts | 设置坐标轴指示器（用于高亮或提示交叉点）                           |
+| timeline_opts       | TimelineOpts    | 配合时间轴使用（仅适用于时间轴图表）                               |
+
+#### opts.TitleOpts 常用参数详解表
+
+| 参数名        | 类型         | 默认值 | 说明 |
+|---------------|--------------|--------|------|
+| title         | str          | ""     | 主标题内容 |
+| subtitle      | str          | ""     | 副标题内容 |
+| left          | str          | "auto" | 标题水平位置，如 'left', 'center', 'right', 或 '10%' |
+| top           | str          | "auto" | 标题垂直位置，如 'top', 'middle', 'bottom', 或 '10%' |
+| right         | str          | None   | 水平位置右对齐的另一方式（一般不常用） |
+| bottom        | str          | None   | 垂直位置底对齐的另一方式（一般不常用） |
+| item_gap      | int          | 10     | 主标题和副标题之间的间距（像素） |
+| text_align    | str          | None   | 标题内容水平对齐方式，如 'left'、'center'、'right' |
+| text_vertical_align | str   | None   | 标题内容垂直对齐方式，如 'top'、'middle'、'bottom' |
+| text_style    | TextStyleOpts| -      | 主标题的文本样式配置（字体、颜色、大小等） |
+| subtext_style | TextStyleOpts| -      | 副标题的文本样式配置 |
+| target        | str          | "blank"| 如果主标题或副标题设置了超链接，表示点击打开的方式，'blank' 或 'self' |
+| link          | str          | ""     | 主标题的超链接地址 |
+| sublink       | str          | ""     | 副标题的超链接地址 |
+
+####  legend_opts 常用参数详解
+
+| 参数名           | 类型         | 默认值     | 说明                                                                 |
+|------------------|--------------|------------|----------------------------------------------------------------------|
+| is_show          | bool         | True       | 是否显示图例                                                         |
+| pos_left         | str          | 'auto'     | 图例组件离容器左侧的距离（例如 `'10%'`, `'center'`, `'right'`）     |
+| pos_right        | str          | 'auto'     | 图例组件离容器右侧的距离                                             |
+| pos_top          | str          | 'auto'     | 图例组件离容器上侧的距离（例如 `'top'`, `'10%'`）                    |
+| pos_bottom       | str          | 'auto'     | 图例组件离容器下侧的距离                                             |
+| orient           | str          | 'horizontal'| 图例排列方向：`'horizontal'` 或 `'vertical'`                        |
+| type_            | str          | 'plain'    | 图例类型：普通图例 `'plain'` 或可滚动图例 `'scroll'`               |
+| selected_mode    | str / bool   | 'multiple' | 图例选择模式：`'multiple'`, `'single'`, 或 `False` 禁用点击         |
+| textstyle_opts   | TextStyleOpts| 默认样式   | 图例文本样式（如字体大小、颜色等）                                  |
+| item_width       | int          | 25         | 图例标记的图形宽度                                                  |
+| item_height      | int          | 14         | 图例标记的图形高度                                                  |
+| item_gap         | int          | 10         | 图例每项之间的间距                                                  |
+| background_color | str          | 'transparent' | 图例背景色，支持 rgba 或 hex                                    |
+| border_color     | str          | '#ccc'     | 图例边框颜色                                                        |
+| border_width     | int          | 0          | 图例边框宽度                                                        |
+
+
+####  TooltipOpts 常用参数说明
+
+| 参数名             | 类型            | 默认值        | 说明 |
+|------------------|----------------|--------------|------|
+| is_show          | bool           | True         | 是否显示提示框组件 |
+| trigger          | str            | 'item'       | 触发类型，可选：'item'（数据项触发）或 'axis'（坐标轴触发）|
+| trigger_on       | str            | 'mousemove'  | 提示框触发条件，如 'click'、'mousemove'、'none' 等 |
+| formatter        | str/function   | None         | 提示框内容的格式器，支持字符串模板或 JS 函数 |
+| background_color | str            | 'rgba(50,50,50,0.7)' | 提示框背景颜色 |
+| border_color     | str            | '#333'       | 提示框边框颜色 |
+| border_width     | int            | 0            | 提示框边框宽度 |
+| textstyle_opts   | TextStyleOpts  | 默认样式     | 提示框文字样式设置 |
+| position         | str/function   | None         | 提示框位置，自定义字符串或 JS 函数 |
+| extra_css_text   | str            | None         | 额外注入提示框 CSS 样式（pyecharts 特有）|
+| confine          | bool           | False        | 是否将 tooltip 框限制在图表区域内 |
+| enterable        | bool           | False        | 提示框是否可交互（例如点击提示框内容）|
+
+
+#### xaxis_opts 
+
+| 参数名                | 类型           | 默认值      | 说明 |
+|-----------------------|----------------|-------------|------|
+| type_                 | str            | 'category'  | 坐标轴类型，常用：'value'（数值轴）、'category'（类目轴）、'log'（对数轴）|
+| name                  | str            | 无          | 坐标轴名称 |
+| name_location         | str            | 'end'       | 坐标轴名称显示位置：'start'、'center'、'end' |
+| name_gap              | int            | 15          | 坐标轴名称与轴线的距离 |
+| name_textstyle_opts   | TextStyleOpts  | 无          | 坐标轴名称的文本样式 |
+| min_                  | int/str        | 自动        | 坐标轴最小值，例如 `0` 或 `'dataMin'` |
+| max_                  | int/str        | 自动        | 坐标轴最大值，例如 `100` 或 `'dataMax'` |
+| interval              | int            | 自动        | 坐标轴刻度间隔 |
+| inverse               | bool           | False       | 是否反转坐标轴 |
+| axislabel_opts        | LabelOpts      | 无          | 坐标轴标签相关设置，如字体、角度等 |
+| axistick_opts         | AxisTickOpts   | 无          | 坐标轴刻度相关设置 |
+| axisline_opts         | AxisLineOpts   | 无          | 坐标轴线相关设置 |
+| splitline_opts        | SplitLineOpts  | 无          | 分割线（网格线）相关设置 |
+| split_number          | int            | 5           | 坐标轴分割段数，设置后 `interval` 自动失效 |
+| boundary_gap          | bool/list      | True        | 类目轴两端是否留白，或具体间距 |
+
+
+#### yaxis_opts
+
+| 参数名             | 类型              | 说明                                                                 |
+|------------------|------------------|----------------------------------------------------------------------|
+| `type_`          | str              | 坐标轴类型，可选：`value`（数值轴）、`category`（类目轴）、`log`（对数轴）、`time`（时间轴） |
+| `name`           | str              | 坐标轴名称，会显示在坐标轴末端                                     |
+| `name_location`  | str              | 坐标轴名称位置：`start`，`middle`，`end`                            |
+| `name_gap`       | int              | 坐标轴名称与轴线之间的距离（单位：像素）                           |
+| `name_rotate`    | int              | 名称旋转角度                                                        |
+| `min_`           | str or int       | 坐标轴最小值，如 `'dataMin'`、数值                                 |
+| `max_`           | str or int       | 坐标轴最大值，如 `'dataMax'`、数值                                 |
+| `interval`       | int              | 强制设置坐标轴分割间隔                                              |
+| `axislabel_opts` | AxisLabelOpts    | 设置坐标轴标签样式（字体大小、旋转、格式化等）                     |
+| `axisline_opts`  | AxisLineOpts     | 设置坐标轴轴线样式（是否显示、颜色等）                             |
+| `axistick_opts`  | AxisTickOpts     | 设置刻度样式                                                        |
+| `splitline_opts` | SplitLineOpts    | 设置分割线样式（是否显示、线条类型、颜色等）                       |
+| `split_number`   | int              | 分割段数，用于自动计算坐标轴刻度                                   |
+| `scale`          | bool             | 是否脱离 0 值比例，保证坐标轴不从 0 开始                           |
+| `position`       | str              | 坐标轴位置：`left`、`right`                                         |
+
+#### visualmap_opts
+
+| 参数名         | 类型       | 说明                                                                 |
+|----------------|------------|----------------------------------------------------------------------|
+| `type_`        | str        | 指定类型，可选 `"continuous"`（连续型）或 `"piecewise"`（分段型）。默认 `"continuous"`。|
+| `min_`         | int/float  | 视觉映射的最小值。通常与图表数据的最小值对应。                       |
+| `max_`         | int/float  | 视觉映射的最大值。通常与图表数据的最大值对应。                       |
+| `range_color`  | list[str]  | 映射的颜色范围，如 `["#f6efa6", "#d88273", "#bf444c"]`。              |
+| `orient`       | str        | 图例方向，`"vertical"` 或 `"horizontal"`。默认 `"vertical"`。         |
+| `pos_left`     | str        | 组件距离左侧的距离，如 `"left"`、`"20%"`、`"100px"`。                  |
+| `pos_right`    | str        | 组件距离右侧的距离。与 `pos_left` 类似，二者互斥。                    |
+| `pos_top`      | str        | 组件距离顶部的距离，如 `"top"`、`"10px"` 等。                         |
+| `pos_bottom`   | str        | 组件距离底部的距离。                                                  |
+| `textstyle_opts` | TextStyleOpts | 文本样式设置，例如字体大小、颜色等。                                 |
+| `is_calculable` | bool      | 是否显示拖拽用的手柄（仅适用于 `type_="continuous"`）。                |
+| `dimension`     | int/str   | 使用数据的第几维度进行视觉映射。用于多维度数据。                     |
+| `series_index`  | list[int] | 映射作用到哪些系列（series），用序号指定。                            |
+| `item_width`    | int       | 图例组件每项的宽度（主要用于 `piecewise` 类型）。                     |
+| `item_height`   | int       | 图例组件每项的高度。                                                  |
+| `is_inverse`    | bool      | 是否反转视觉映射。                                                    |
+| `split_number`  | int       | 视觉映射组件的分段数量（用于 `continuous` 类型）。                    |
+
+
+#### datazoom_opts
+
+
+| 参数名              | 类型           | 说明                                                         | 默认值          | 备注                               |
+|--------------------|---------------|--------------------------------------------------------------|-----------------|----------------------------------|
+| `type_`            | `str`         | 数据缩放类型，常用 `"slider"`（滑动条）或 `"inside"`（内置缩放） | `"slider"`      | 控制缩放条的表现形式             |
+| `is_show`          | `bool`        | 是否显示数据缩放组件                                         | `True`          | 设置为 `False` 则不显示          |
+| `xaxis_index`      | `int` 或 `list` | 指定该缩放组件控制的 x 轴索引                               | `0`             | 支持多个轴索引列表               |
+| `yaxis_index`      | `int` 或 `list` | 指定该缩放组件控制的 y 轴索引                               | 无              | 一般不常用                      |
+| `start`            | `int`         | 起始百分比，控制缩放窗口起始位置，范围 0~100                 | `0`             | 初始显示的起点百分比             |
+| `end`              | `int`         | 结束百分比，控制缩放窗口结束位置，范围 0~100                 | `100`           | 初始显示的终点百分比             |
+| `orient`           | `str`         | 布局方向，`"horizontal"`（水平）或 `"vertical"`（垂直）       | `"horizontal"`  | 缩放条的方向                   |
+| `filter_mode`      | `str`         | 数据过滤模式，`"filter"`（过滤数据）、`"empty"`（隐藏数据点） | `"filter"`      | 控制缩放后数据的处理方式         |
+| `zoom_lock`        | `bool`        | 是否锁定缩放组件，禁止缩放                                  | `False`         | 锁定后不能调整缩放范围           |
+| `min_span`         | `int`         | 缩放窗口的最小跨度百分比                                     | 无              | 限制缩放窗口最小范围             |
+| `max_span`         | `int`         | 缩放窗口的最大跨度百分比                                     | 无              | 限制缩放窗口最大范围             |
+| `range_mode`       | `list`        | 范围模式，定义起点和终点如何计算                             | `[]`            | 高级用法，一般不常用             |
+| `background_color` | `str`         | 缩放条背景色                                                | 无              | 支持颜色代码或名称               |
+| `data_background`  | `dict`        | 数据背景样式配置                                            | 无              | 可设置颜色、透明度等             |
+| `handle_style`     | `dict`        | 缩放手柄样式                                                | 无              | 控制缩放手柄的颜色、边框等       |
+| `text_style`       | `dict`        | 缩放组件文字样式                                            | 无              | 字体颜色、大小等                 |
+
+### set_series_opts
+
+| 参数名               | 类型               | 说明                                                         | 默认值      | 备注                             |
+|----------------------|--------------------|--------------------------------------------------------------|-------------|----------------------------------|
+| `label_opts`         | `LabelOpts`        | 系列标签配置，控制标签文字的显示、位置、格式等               | 无          | 如是否显示标签，字体大小颜色等   |
+| `markpoint_opts`     | `MarkPointOpts`    | 标记点配置，用于突出显示特殊数据点                           | 无          | 支持最大值、最小值、自定义点等   |
+| `markline_opts`      | `MarkLineOpts`     | 标记线配置，用于标注特定的线，如均值线、阈值线               | 无          | 支持类型和自定义线段             |
+| `markarea_opts`      | `MarkAreaOpts`     | 标记区域配置，用于突出显示区间范围                           | 无          | 区域高亮显示                    |
+| `areastyle_opts`     | `AreaStyleOpts`    | 区域样式配置，主要用于折线图的填充区域                       | 无          | 颜色、透明度等                  |
+| `linestyle_opts`     | `LineStyleOpts`    | 线条样式配置，如颜色、宽度、线型（实线、虚线等）              | 无          | 只对折线图有效                  |
+| `itemstyle_opts`     | `ItemStyleOpts`    | 图形样式配置，如柱状图、饼图的颜色、边框、阴影等              | 无          | 调整系列图形视觉效果            |
+| `tooltip_opts`       | `TooltipOpts`      | 提示框配置，控制鼠标悬浮时显示内容和样式                     | 无          | 可自定义格式和样式              |
+| `stack`              | `str`              | 堆叠系列名称，相同名称的系列会堆叠显示                       | 无          | 用于堆叠柱状图、折线图          |
+| `smooth`             | `bool`             | 是否平滑折线                                                | `False`     | 只对折线图有效                  |
+| `symbol`             | `str`              | 数据点标记形状，如 `"circle"`, `"rect"`, `"triangle"`         | `"circle"`  | 折线图或散点图数据点形状        |
+| `symbol_size`        | `int` 或 `func`    | 数据点标记大小                                             | `4`         | 支持函数动态设置大小            |
+| `is_selected`        | `bool`             | 是否选中该系列                                             | `True`      | 影响图例默认选中状态            |
+| `label_show`         | `bool`             | 是否显示标签                                               | `False`     | 简写，等同于设置 `label_opts`   |
+| `emphasis`           | `EmphasisOpts`     | 高亮状态配置，鼠标悬浮或选中时的样式                       | 无          | 可设置高亮颜色、字体等          |
+
+
 
 
 
