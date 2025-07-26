@@ -241,6 +241,83 @@ scatter.render_notebook()
 ```
 ![基础散点图.png](../imgs/pyecharts/%E5%9F%BA%E7%A1%80%E6%95%A3%E7%82%B9%E5%9B%BE.png)
 
+### 旭日图
+
+```python
+from pyecharts.charts import *
+from pyecharts.globals import * 
+import pyecharts.options as opts 
+
+# 构造数据
+data = [
+    opts.SunburstItem(
+        name="类别 1",
+        children=[
+            opts.SunburstItem(name="子类 1",value=1),
+            opts.SunburstItem(name="子类 2",value=2)
+        ]
+    ),
+    opts.SunburstItem(
+        name="类别 2",
+        value=3,
+        children=[
+            opts.SunburstItem(name="子类 3",value=1),
+            opts.SunburstItem(name="子类 4",value=1),
+            opts.SunburstItem(name="子类 5",value=1)
+        ]
+    )
+]
+
+sunburst = (
+    Sunburst(init_opts=opts.InitOpts(
+        theme=ThemeType.LIGHT,
+        bg_color="white"
+    ))
+    .add("",data_pair=data,radius=[0,'90%'])
+    .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}"))
+    .set_global_opts(toolbox_opts=opts.ToolboxOpts(),title_opts=opts.TitleOpts(title="旭日图示例"))
+)
+
+sunburst.render_notebook()
+```
+![旭日图示例.png](../imgs/pyecharts/%E6%97%AD%E6%97%A5%E5%9B%BE%E7%A4%BA%E4%BE%8B.png)
+
+### 堆叠面积图
+
+```python
+from pyecharts.charts import Line
+from pyecharts import options as opts
+
+# 示例数据
+x_data = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+y1 = [120, 132, 101, 134, 90, 230, 210]
+y2 = [220, 182, 191, 234, 290, 330, 310]
+y3 = [150, 232, 201, 154, 190, 330, 410]
+
+line = (
+    Line(init_opts=opts.InitOpts(
+        theme=ThemeType.LIGHT,
+        bg_color="white"
+    ))
+    .add_xaxis(x_data)
+    .add_yaxis("邮件营销", y1, stack="总量", areastyle_opts=opts.AreaStyleOpts(opacity=0.5))
+    .add_yaxis("联盟广告", y2, stack="总量", areastyle_opts=opts.AreaStyleOpts(opacity=0.5))
+    .add_yaxis("视频广告", y3, stack="总量", areastyle_opts=opts.AreaStyleOpts(opacity=0.5))
+    .set_global_opts(
+        title_opts=opts.TitleOpts(title="堆叠面积图示例"),
+        tooltip_opts=opts.TooltipOpts(trigger="axis"),
+        xaxis_opts=opts.AxisOpts(type_="category"),
+        yaxis_opts=opts.AxisOpts(type_="value"),
+        toolbox_opts=opts.ToolboxOpts()
+    )
+)
+
+line.render_notebook()
+```
+![堆叠面积图示例.png](../imgs/pyecharts/%E5%A0%86%E5%8F%A0%E9%9D%A2%E7%A7%AF%E5%9B%BE%E7%A4%BA%E4%BE%8B.png)
+
+
+
 ### set_global_opts 
 
 | 参数名              | 类型            | 说明                                                                 |
