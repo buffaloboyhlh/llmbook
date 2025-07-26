@@ -1,0 +1,3534 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../features/">
+      
+      
+        <link rel="next" href="../supervised/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>第二章：模型评估 - 📚面试秘籍</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../styles/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../styles/css/custom-toc.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="📚面试秘籍" class="md-header__button md-logo" aria-label="📚面试秘籍" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            📚面试秘籍
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第二章：模型评估
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🏠Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../maths/math/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🐵程序员的数学
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../langs/python/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🦏语言大本营
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../algorithm/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐹算法大本营
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../cloud/docker/docker/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐺云原生
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../analysis/numpy/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🦧数据分析大营
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../scikit-learn/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐴机器学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../deeplearning/pytorch/tensor/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐣深度学习
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../llm/huggingface/pipeline/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐙大模型
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../llmapp/langchain/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐠大模型应用
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="📚面试秘籍" class="md-nav__button md-logo" aria-label="📚面试秘籍" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    📚面试秘籍
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🏠Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../maths/math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🐵程序员的数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../langs/python/basic/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🦏语言大本营
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../algorithm/basic/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐹算法大本营
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../cloud/docker/docker/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐺云原生
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../analysis/numpy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🦧数据分析大营
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    🐴机器学习
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            🐴机器学习
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scikit-learn/basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    scikit-learn手册
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../ml-tutorial/01-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    机器学习教程
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    机器学习面试
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            机器学习面试
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第一章：特征工程
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    第二章：模型评估
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    第二章：模型评估
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、准确率
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、准确率">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ 什么是准确率（Accuracy）？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ 数学公式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ Python 代码实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ 准确率的优缺点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5️⃣ 适用场景
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、精确率与召回率
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、精确率与召回率">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ 精确率（Precision）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ 召回率（Recall）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ 代码实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ 二者关系与权衡
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5️⃣ 适用场景
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-f1-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      6️⃣ F1-score：综合指标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7️⃣ 混淆矩阵中的直观理解
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-p-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      8️⃣ P-R 曲线
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roc" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、ROC曲线
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、ROC曲线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roc_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟢 为什么用 ROC 曲线？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roc_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟩 如何绘制 ROC 曲线？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟩 理想情况 &amp; 随机情况
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roc-auc" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟩 ROC 曲线下面积（AUC）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-r-vs-roc" class="md-nav__link">
+    <span class="md-ellipsis">
+      P-R vs ROC：场景对比总结表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-roc" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟢 Python 绘制 ROC 曲线完整示例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、余弦距离
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、余弦距离">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ 基本概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ 公式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-python_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ Python 代码示例
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ 与欧氏距离的区别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      5️⃣ 应用场景
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、模型评估策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、模型评估策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、模型评估的整体流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、评估策略核心问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、模型评估策略类型详解
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、超参数调优
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、超参数调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 什么是超参数？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 为什么要调优？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 常见调参方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、过拟合和欠拟合
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、过拟合和欠拟合">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#underfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 欠拟合（Underfitting）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 过拟合（Overfitting）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 如何解决？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第三章：监督学习模型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dimension/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第四章：降维
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unsupervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第五章：非监督学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pgm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第六章：概率图模型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../optiom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第七章：优化算法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第八章：采样
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../forward/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第九章：前向神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十章：循环神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十一章：强化学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ensemble/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十二章：集成学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十三章：生成式对抗网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../ml-action/knn/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    机器学习实战
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../deeplearning/pytorch/tensor/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐣深度学习
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../llm/huggingface/pipeline/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐙大模型
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../llmapp/langchain/basic/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐠大模型应用
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、准确率
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、准确率">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ 什么是准确率（Accuracy）？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ 数学公式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ Python 代码实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ 准确率的优缺点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5️⃣ 适用场景
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、精确率与召回率
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、精确率与召回率">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ 精确率（Precision）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ 召回率（Recall）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ 代码实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ 二者关系与权衡
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5️⃣ 适用场景
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-f1-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      6️⃣ F1-score：综合指标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7️⃣ 混淆矩阵中的直观理解
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-p-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      8️⃣ P-R 曲线
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roc" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、ROC曲线
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、ROC曲线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roc_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟢 为什么用 ROC 曲线？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roc_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟩 如何绘制 ROC 曲线？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟩 理想情况 &amp; 随机情况
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roc-auc" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟩 ROC 曲线下面积（AUC）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-r-vs-roc" class="md-nav__link">
+    <span class="md-ellipsis">
+      P-R vs ROC：场景对比总结表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-roc" class="md-nav__link">
+    <span class="md-ellipsis">
+      🟢 Python 绘制 ROC 曲线完整示例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、余弦距离
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、余弦距离">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ 基本概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ 公式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-python_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ Python 代码示例
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ 与欧氏距离的区别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      5️⃣ 应用场景
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、模型评估策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、模型评估策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、模型评估的整体流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、评估策略核心问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、模型评估策略类型详解
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、超参数调优
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、超参数调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 什么是超参数？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 为什么要调优？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 常见调参方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、过拟合和欠拟合
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、过拟合和欠拟合">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#underfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 欠拟合（Underfitting）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 过拟合（Overfitting）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 如何解决？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">第二章：模型评估<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">一、准确率<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="1-accuracy">1️⃣ 什么是准确率（Accuracy）？<a class="headerlink" href="#1-accuracy" title="Permanent link">&para;</a></h3>
+<p>准确率（Accuracy）是分类模型最常用的评估指标之一。它表示模型正确预测的样本数量占总样本数量的比例。</p>
+<blockquote>
+<p>准确率 = 正确预测的数量 ÷ 总预测的数量</p>
+</blockquote>
+<h3 id="2">2️⃣ 数学公式<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>如果你有一个二分类问题（正例和负例），混淆矩阵可以表示为：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>预测正例 (P')</th>
+<th>预测负例 (N')</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>真实正例 (P)</strong></td>
+<td>TP (真阳性)</td>
+<td>FN (假阴性)</td>
+</tr>
+<tr>
+<td><strong>真实负例 (N)</strong></td>
+<td>FP (假阳性)</td>
+<td>TN (真阴性)</td>
+</tr>
+</tbody>
+</table>
+<p>其中：</p>
+<ul>
+<li>TP：预测为正例，且真实为正例。</li>
+<li>TN：预测为负例，且真实为负例。</li>
+<li>FP：预测为正例，但真实为负例。</li>
+<li>FN：预测为负例，但真实为正例。</li>
+</ul>
+<p>那么准确率公式为：</p>
+<div class="arithmatex">\[
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\]</div>
+<h3 id="3-python">3️⃣ Python 代码实现<a class="headerlink" href="#3-python" title="Permanent link">&para;</a></h3>
+<p>下面用 scikit-learn 举个例子：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># 假设真实标签和预测标签如下</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># 计算准确率</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;准确率：&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">输出结果</p>
+<p>准确率：0.7142857142857143</p>
+</div>
+<h3 id="4">4️⃣ 准确率的优缺点<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<h4 id="_3">✅ 优点：<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li>简单直观，易于理解。</li>
+<li>适用于类别平衡的数据集。</li>
+</ul>
+<h4 id="_4">❌ 缺点：<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li>当类别分布不均衡（即样本类别极度不平衡）时，准确率可能具有误导性。</li>
+<li>例如，95% 的样本是负例，只要模型全预测负例，准确率就能达到 95%，但模型其实没有真正学到有用的信息。</li>
+</ul>
+<h3 id="5">5️⃣ 适用场景<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>适合 <strong>类别分布均衡</strong> 的二分类或多分类问题。</li>
+<li>不适合类别极不平衡的情况（此时更推荐使用 F1-score、AUC-ROC、召回率、精确率等指标）。</li>
+</ul>
+<h2 id="_5">二、精确率与召回率<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="1-precision">1️⃣ 精确率（Precision）<a class="headerlink" href="#1-precision" title="Permanent link">&para;</a></h3>
+<p>精确率衡量的是：在所有被模型预测为正例的样本中，有多少是真正的正例。</p>
+<blockquote>
+<p>换句话说，它关注 预测为正例的样本中有多少是准确的。</p>
+</blockquote>
+<div class="arithmatex">\[
+\text{Precision} = \frac{TP}{TP + FP}
+\]</div>
+<p>其中：</p>
+<ul>
+<li>TP（True Positive）：真正例，预测为正例且真实也是正例。</li>
+<li>FP（False Positive）：假阳性，预测为正例但真实是负例。</li>
+</ul>
+<h3 id="2-recall">2️⃣ 召回率（Recall）<a class="headerlink" href="#2-recall" title="Permanent link">&para;</a></h3>
+<p>召回率衡量的是： 在所有真实正例的样本中，有多少被模型成功预测为正例。</p>
+<p>它关注 模型捕获正例的能力。</p>
+<div class="arithmatex">\[
+\text{Recall} = \frac{TP}{TP + FN}
+\]</div>
+<p>其中：</p>
+<ul>
+<li>FN（False Negative）：假阴性，真实为正例但被预测为负例。</li>
+</ul>
+<h3 id="3">3️⃣ 代码实现<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>使用 scikit-learn 中的 precision_score 和 recall_score：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># 假设真实标签和预测标签</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 计算精确率</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;精确率：&quot;</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># 计算召回率</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;召回率：&quot;</span><span class="p">,</span> <span class="n">recall</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">输出结果</p>
+<p>精确率：0.75
+召回率：0.6</p>
+</div>
+<h3 id="4_1">4️⃣ 二者关系与权衡<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>精确率高：预测为正例时，更有把握是真的正例（误报少）。</li>
+<li>召回率高：能找到更多的真实正例（漏报少）。</li>
+</ul>
+<p>但是，二者通常是一对“跷跷板”：</p>
+<p>如果你想提高召回率，通常需要让模型更“宽松”，多预测正例，可能会引入更多的假阳性，导致精确率下降；反之，若提高精确率，召回率可能下降。</p>
+<h3 id="5_1">5️⃣ 适用场景<a class="headerlink" href="#5_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>更看重</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>垃圾邮件检测</strong></td>
+<td>精确率</td>
+<td>不希望正常邮件被误判为垃圾邮件。</td>
+</tr>
+<tr>
+<td><strong>癌症筛查</strong></td>
+<td>召回率</td>
+<td>尽可能发现所有的癌症患者（不怕误报，但怕漏报）。</td>
+</tr>
+<tr>
+<td><strong>欺诈检测</strong></td>
+<td>召回率</td>
+<td>不想漏掉任何潜在的欺诈行为，宁可多抓一些可疑交易。</td>
+</tr>
+<tr>
+<td><strong>广告点击预测</strong></td>
+<td>精确率</td>
+<td>不希望把不相关的广告推送给用户。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-f1-score">6️⃣ F1-score：综合指标<a class="headerlink" href="#6-f1-score" title="Permanent link">&para;</a></h3>
+<p>F1-score 是 精确率（Precision）和召回率（Recall） 的调和平均数，是一个综合考虑分类模型性能的指标，尤其适合：</p>
+<ul>
+<li>样本不平衡（如疾病预测、欺诈检测）</li>
+<li>既不能漏掉真阳性（高 Recall），也不能误报太多（高 Precision）的任务</li>
+</ul>
+<p>当你想要平衡 精确率 和 召回率 时，可以使用 F1-score：</p>
+<div class="arithmatex">\[
+\text{F1} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\]</div>
+<p>它是它们的调和平均数。
+常用于二者都重要的场景。</p>
+<p>F1-score 是在 Precision 和 Recall 存在矛盾时，用于权衡这两个指标，特别适合样本不平衡分类任务的重要评估指标。</p>
+<h3 id="7">7️⃣ 混淆矩阵中的直观理解<a class="headerlink" href="#7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>举例（肿瘤检测）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP</td>
+<td>真阳性：正类被正确预测为正类</td>
+<td>检测出患病者确实患病</td>
+</tr>
+<tr>
+<td>FP</td>
+<td>假阳性：负类被错误预测为正类</td>
+<td>检测出患病者实际没病（误判）</td>
+</tr>
+<tr>
+<td>FN</td>
+<td>假阴性：正类被错误预测为负类</td>
+<td>没检测出患病者其实有病（漏判）</td>
+</tr>
+<tr>
+<td>TN</td>
+<td>真阴性：负类被正确预测为负类</td>
+<td>正常人被正确识别为正常</td>
+</tr>
+</tbody>
+</table>
+<p>基于混淆矩阵：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>预测正例 (P')</th>
+<th>预测负例 (N')</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>真实正例 (P)</strong></td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr>
+<td><strong>真实负例 (N)</strong></td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>精确率：看 <strong>预测正例那一列</strong> → <code>TP / (TP + FP)</code></li>
+<li>召回率：看 <strong>真实正例那一行</strong> → <code>TP / (TP + FN)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>公式</th>
+<th>意义说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accuracy 准确率</td>
+<td><span class="arithmatex">\( \frac{TP + TN}{TP + FP + FN + TN} \)</span></td>
+<td>总体预测正确的比例</td>
+</tr>
+<tr>
+<td>Precision 精确率</td>
+<td><span class="arithmatex">\( \frac{TP}{TP + FP} \)</span></td>
+<td>预测为正中有多少是真正的正</td>
+</tr>
+<tr>
+<td>Recall 召回率</td>
+<td><span class="arithmatex">\( \frac{TP}{TP + FN} \)</span></td>
+<td>实际为正中被预测出来的比例</td>
+</tr>
+<tr>
+<td>F1-score</td>
+<td><span class="arithmatex">\( 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall} \)</span></td>
+<td>精确率与召回率的平衡</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-p-r">8️⃣ P-R 曲线<a class="headerlink" href="#8-p-r" title="Permanent link">&para;</a></h3>
+<p>P-R 曲线（Precision-Recall Curve），中文叫 <strong>精确率-召回率曲线</strong>，是用来可视化和评价二分类模型性能的曲线。</p>
+<p><strong>横轴</strong>是：召回率（Recall）也叫灵敏度，表示在所有真正例中，模型找回的比例。</p>
+<p><strong>纵轴</strong>是：精确率（Precision）：也叫查准率，表示模型预测为正例中，真正例的比例。</p>
+<h4 id="p-r">🟩 P-R 曲线的绘制<a class="headerlink" href="#p-r" title="Permanent link">&para;</a></h4>
+<p>对于二分类模型（比如逻辑回归、随机森林等），模型通常会输出一个 概率分数，表示样本属于正类的可能性。通过不同的
+阈值，把这个分数转换成具体的「正类/负类」标签。</p>
+<p><strong>步骤：</strong></p>
+<p>1️⃣ 从最高分数到最低分数，依次选取不同的阈值。</p>
+<p>2️⃣ 对于每个阈值，计算对应的 Precision 和 Recall。</p>
+<p>3️⃣ 把每一对 (Recall, Precision) 作为一个坐标点，依次连接，就得到了 P-R 曲线。</p>
+<h4 id="p-r_1">🟩 P-R 曲线的意义<a class="headerlink" href="#p-r_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>召回率高</strong>：模型能识别更多正例，假阳性风险高。</li>
+<li><strong>精确率高</strong>：模型预测更准确，假阴性风险高。</li>
+<li>二者往往互相制约，P-R 曲线可以全面反映这个权衡关系。</li>
+</ul>
+<h4 id="_6">🟩 代码实现<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_classification</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">precision_recall_curve</span><span class="p">,</span> <span class="n">average_precision_score</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.family&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Songti SC&quot;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># 1️⃣ 生成二分类模拟数据</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>                           <span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1"># 2️⃣ 划分训练集和测试集</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">)</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c1"># 3️⃣ 使用随机森林进行训练</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c1"># 4️⃣ 得到预测概率</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="n">y_scores</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># 只要正类的概率分数</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="c1"># 5️⃣ 计算 Precision-Recall 曲线</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_scores</span><span class="p">)</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c1"># 6️⃣ 计算 Average Precision (AP)</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="n">ap_score</span> <span class="o">=</span> <span class="n">average_precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_scores</span><span class="p">)</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="c1"># 7️⃣ 绘制 P-R 曲线</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">recall</span><span class="p">,</span> <span class="n">precision</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;P-R曲线 (AP=</span><span class="si">{</span><span class="n">ap_score</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">recall</span><span class="p">,</span> <span class="n">precision</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Recall (召回率)&#39;</span><span class="p">)</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precision (精确率)&#39;</span><span class="p">)</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;P-R 曲线示例&#39;</span><span class="p">)</span>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">输出结果</p>
+<p><img alt="pr.png" src="../../../imgs/ml/pr.png" /></p>
+</div>
+<h2 id="roc">三、ROC曲线<a class="headerlink" href="#roc" title="Permanent link">&para;</a></h2>
+<p>ROC 曲线是二分类模型评估的重要可视化工具。</p>
+<p><strong>横轴</strong>：假阳性率（FPR, False Positive Rate）<span class="arithmatex">\(\text{FPR} = \frac{FP}{FP + TN}\)</span>  表示负例被误判为正例的比例。</p>
+<p><strong>纵轴</strong>：真正例率（TPR, True Positive Rate，也叫 Recall）<span class="arithmatex">\(\text{TPR} = \frac{TP}{TP + FN}\)</span>  表示正例被正确预测的比例。</p>
+<h3 id="roc_1">🟢 为什么用 ROC 曲线？<a class="headerlink" href="#roc_1" title="Permanent link">&para;</a></h3>
+<p>ROC 曲线用于观察模型在不同阈值下的表现。
+<strong>阈值</strong>：把概率分数转成「正/负」标签的分界线。</p>
+<p>随着阈值从 1 ➡ 0，FPR、TPR 都会变化，连成一条曲线，就得到了 ROC 曲线。</p>
+<h3 id="roc_2">🟩 如何绘制 ROC 曲线？<a class="headerlink" href="#roc_2" title="Permanent link">&para;</a></h3>
+<p>1️⃣ 模型输出概率分数（正例分数）。</p>
+<p>2️⃣ 取不同的阈值，计算 TPR 和 FPR。</p>
+<p>3️⃣ 将所有 (FPR, TPR) 画在坐标系中，连接起来。</p>
+<h3 id="_7">🟩 理想情况 &amp; 随机情况<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>理想模型</strong>：TPR 快速上升，曲线非常靠近左上角（0,1）点。</li>
+<li><strong>随机模型</strong>：TPR 与 FPR 相等，曲线接近对角线（y=x）。</li>
+</ul>
+<h3 id="roc-auc">🟩 ROC 曲线下面积（AUC）<a class="headerlink" href="#roc-auc" title="Permanent link">&para;</a></h3>
+<p>ROC 曲线的面积称为 AUC（Area Under Curve）。</p>
+<ul>
+<li>AUC = 1：完美模型。</li>
+<li>AUC = 0.5：随机猜测。</li>
+<li>AUC 越接近 1，模型越好。</li>
+</ul>
+<h3 id="p-r-vs-roc">P-R vs ROC：场景对比总结表<a class="headerlink" href="#p-r-vs-roc" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>场景或属性</th>
+<th>ROC 曲线</th>
+<th>P-R 曲线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据是否平衡</td>
+<td>适用于样本平衡</td>
+<td>更适用于<strong>样本不平衡（正类稀缺）</strong></td>
+</tr>
+<tr>
+<td>是否关注负类预测</td>
+<td>是</td>
+<td>否（只关心正类预测情况）</td>
+</tr>
+<tr>
+<td>模型表现是否会被负类影响</td>
+<td>会</td>
+<td>不会</td>
+</tr>
+<tr>
+<td>随机模型表现</td>
+<td>对角线 AUC=0.5</td>
+<td>Precision 线是一个常数</td>
+</tr>
+<tr>
+<td>高 FP 模型看起来怎么样</td>
+<td>可能仍有高 AUC（<strong>误导性高</strong>）</td>
+<td>会导致 Precision 下降，真实反映模型能力</td>
+</tr>
+<tr>
+<td>可解释性</td>
+<td>整体表现</td>
+<td>关注“正类”的表现，更接近实际业务需求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="python-roc">🟢 Python 绘制 ROC 曲线完整示例<a class="headerlink" href="#python-roc" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_classification</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">auc</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># 1️⃣ 生成二分类不平衡数据</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>                           <span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># 2️⃣ 划分数据集</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="p">)</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1"># 3️⃣ 训练模型</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="c1"># 4️⃣ 获取预测概率</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="n">y_scores</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="c1"># 5️⃣ 计算 ROC 曲线</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_scores</span><span class="p">)</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="n">roc_auc</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="c1"># 6️⃣ 绘图</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;ROC 曲线 (AUC=</span><span class="si">{</span><span class="n">roc_auc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;随机猜测&#39;</span><span class="p">)</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;假阳性率 (FPR)&#39;</span><span class="p">)</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;真正例率 (TPR, Recall)&#39;</span><span class="p">)</span>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ROC 曲线示例&#39;</span><span class="p">)</span>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">输出结果</p>
+<p><img alt="roc.png" src="../../../imgs/ml/roc.png" /></p>
+</div>
+<h2 id="_8">四、余弦距离<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1">1️⃣ 基本概念<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<h4 id="cosine-similarity">余弦相似度（cosine similarity）<a class="headerlink" href="#cosine-similarity" title="Permanent link">&para;</a></h4>
+<p>衡量两个向量在向量空间中的 <strong>方向相似度，与向量的大小无关</strong>。</p>
+<p>取值范围：[-1, 1]，其中：</p>
+<ul>
+<li>1 → 完全相同方向（最相似）</li>
+<li>0 → 垂直（完全无关）</li>
+<li>-1 → 完全相反方向</li>
+</ul>
+<h4 id="cosine-distance">余弦距离（cosine distance）<a class="headerlink" href="#cosine-distance" title="Permanent link">&para;</a></h4>
+<p>是余弦相似度的“互补距离”： <span class="arithmatex">\(\text{cosine distance} = 1 - \text{cosine similarity}\)</span></p>
+<h3 id="2_1">2️⃣ 公式<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h3>
+<p>假设有两个向量：</p>
+<p><span class="arithmatex">\(\mathbf{A} = (A_1, A_2, \ldots, A_n), \quad \mathbf{B} = (B_1, B_2, \ldots, B_n)\)</span></p>
+<p><strong>余弦相似度公式</strong></p>
+<p><span class="arithmatex">\(\text{cosine similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|} = \frac{\sum_{i=1}^n A_i B_i}{\sqrt{\sum_{i=1}^n A_i^2} \sqrt{\sum_{i=1}^n B_i^2}}\)</span></p>
+<p><strong>余弦距离公式</strong></p>
+<p><span class="arithmatex">\(\text{cosine distance} = 1 - \text{cosine similarity}\)</span></p>
+<h3 id="3-python_1">3️⃣ Python 代码示例<a class="headerlink" href="#3-python_1" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosine_similarity</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 两个向量</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># 计算余弦相似度</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">cos_sim</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">A</span><span class="p">],</span> <span class="p">[</span><span class="n">B</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;余弦相似度:&quot;</span><span class="p">,</span> <span class="n">cos_sim</span><span class="p">)</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># 计算余弦距离</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">cos_dist</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cos_sim</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;余弦距离:&quot;</span><span class="p">,</span> <span class="n">cos_dist</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">输出结果</p>
+<p>余弦相似度: 0.9746318461970762</p>
+<p>余弦距离: 0.025368153802923788</p>
+</div>
+<h3 id="4_2">4️⃣ 与欧氏距离的区别<a class="headerlink" href="#4_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>比较维度</th>
+<th>欧氏距离</th>
+<th>余弦距离（相似度）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>关注重点</strong></td>
+<td>向量的 <strong>长度 + 方向</strong></td>
+<td>只关注 <strong>方向（夹角）</strong></td>
+</tr>
+<tr>
+<td><strong>是否受量纲影响</strong></td>
+<td>是，特征量纲差异大时必须归一化处理</td>
+<td>否，内置归一化，自动忽略大小，仅看方向</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>KNN、K-Means、回归分析等</td>
+<td>文本相似度、图像相似度、推荐系统、向量检索等</td>
+</tr>
+<tr>
+<td><strong>常用公式</strong></td>
+<td><span class="arithmatex">\(\sqrt{\sum (A_i - B_i)^2}\)</span></td>
+<td><span class="arithmatex">\(1 - \frac{A \cdot B}{\|A\|\|B\|}\)</span></td>
+</tr>
+<tr>
+<td><strong>是否与向量长度有关</strong></td>
+<td>有，向量长度越大距离越大</td>
+<td>无，只与方向有关</td>
+</tr>
+<tr>
+<td><strong>结果范围</strong></td>
+<td><span class="arithmatex">\([0, +\infty)\)</span>，越小越相似</td>
+<td><span class="arithmatex">\([0, 1]\)</span>，越小越相似（0 表示方向完全一致）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5_2">5️⃣ 应用场景<a class="headerlink" href="#5_2" title="Permanent link">&para;</a></h3>
+<p>✅ 文本分析（TF-IDF / Word2Vec / BERT 等向量化结果）</p>
+<p>✅ 图像检索 / 向量搜索（相似度度量）</p>
+<p>✅ 推荐系统（用户兴趣向量、物品特征向量）</p>
+<p>✅ 任何只关心“方向相似度”的场景</p>
+<h2 id="_9">五、模型评估策略<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="_10">一、模型评估的整体流程<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>数据准备 → 模型训练 → 模型评估 → 模型选择/调参 → 最终测试
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>                          ↑
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                    重点就在这里！
+</span></code></pre></div>
+<h3 id="_11">二、评估策略核心问题<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>要解决以下几个核心问题：</p>
+<table>
+<thead>
+<tr>
+<th>评估问题</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>如何划分训练/验证/测试集？</td>
+<td>Holdout、交叉验证、时间序列分割</td>
+</tr>
+<tr>
+<td>用什么指标衡量好坏？</td>
+<td>分类：准确率/F1，回归：MSE，排序：NDCG</td>
+</tr>
+<tr>
+<td>如何避免“运气好”的评估结果？</td>
+<td>多次评估、交叉验证、Bootstrap</td>
+</tr>
+<tr>
+<td>如何根据评估结果调参选模？</td>
+<td>网格搜索、贝叶斯优化</td>
+</tr>
+<tr>
+<td>模型是否真的能泛化到线上实际数据？</td>
+<td>留出真实线上数据模拟 A/B 测试</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_12">三、模型评估策略类型详解<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<h4 id="1_1">✅ 1. 数据划分策略<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Holdout（留出法）</td>
+<td>一次性划分：训练 / 验证 / 测试集</td>
+</tr>
+<tr>
+<td>K-Fold 交叉验证</td>
+<td>将数据分成 K 份轮流作为验证集，平均得分更稳健</td>
+</tr>
+<tr>
+<td>Stratified K-Fold</td>
+<td>保持类别比例一致的 K-Fold（分类任务中更准确）</td>
+</tr>
+<tr>
+<td>Leave-One-Out</td>
+<td>每次只留一个样本做验证，极端稳健但计算开销大</td>
+</tr>
+<tr>
+<td>时间序列分割</td>
+<td>时间敏感任务，训练集必须早于验证集（不可打乱）</td>
+</tr>
+<tr>
+<td>Bootstrap</td>
+<td>有放回采样，可反复模拟训练/评估，多用于小样本或集成模型</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2_2">✅ 2. 评估指标策略（按任务类型）<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h4>
+<h5 id="_13">📌 分类任务（如垃圾邮件识别、图像分类）<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>准确率</td>
+<td>所有预测正确样本数 / 总样本数</td>
+</tr>
+<tr>
+<td>精确率</td>
+<td>TP / (TP + FP) —— 预测为正中有多少是真正正例</td>
+</tr>
+<tr>
+<td>召回率</td>
+<td>TP / (TP + FN) —— 所有正样本中预测出来的比例</td>
+</tr>
+<tr>
+<td>F1 分数</td>
+<td>精确率与召回率的调和平均</td>
+</tr>
+<tr>
+<td>AUC-ROC</td>
+<td>真阳率 vs 假阳率曲线下的面积</td>
+</tr>
+<tr>
+<td>PR-AUC</td>
+<td>精确率 vs 召回率曲线下的面积（更适合类别不平衡）</td>
+</tr>
+</tbody>
+</table>
+<h5 id="_14">📌 回归任务（如房价预测、销售额预测）<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th>指标名</th>
+<th>全称</th>
+<th>公式</th>
+<th>特点</th>
+<th>Python 函数（sklearn.metrics）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MSE</td>
+<td>均方误差</td>
+<td><span class="arithmatex">\(\frac{1}{n} \sum (y - \hat{y})^2\)</span></td>
+<td>对离群值敏感，常用于优化</td>
+<td><code>mean_squared_error</code></td>
+</tr>
+<tr>
+<td>RMSE</td>
+<td>均方根误差</td>
+<td><span class="arithmatex">\(\sqrt{\text{MSE}}\)</span></td>
+<td>单位与目标一致，更直观</td>
+<td>手动 <code>np.sqrt(MSE)</code></td>
+</tr>
+<tr>
+<td>MAE</td>
+<td>平均绝对误差</td>
+<td><span class="arithmatex">\(\frac{1}{n} \sum \|y - \hat{y}\|\)</span></td>
+<td>对离群值不敏感，鲁棒性强</td>
+<td><code>mean_absolute_error</code></td>
+</tr>
+<tr>
+<td>R²</td>
+<td>决定系数</td>
+<td><span class="arithmatex">\(1 - \frac{SSR}{SST}\)</span></td>
+<td>越接近 1 越好，衡量拟合程度</td>
+<td><code>r2_score</code></td>
+</tr>
+<tr>
+<td>MAPE</td>
+<td>平均绝对百分误差</td>
+<td><span class="arithmatex">\(\frac{1}{n} \sum \left\|\frac{y - \hat{y}}{y}\right \| \times 100\%\)</span></td>
+<td>百分比误差，易理解但对 0 敏感</td>
+<td>自定义实现</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>解释</th>
+<th>越小/大越好</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MSE</td>
+<td>均方误差，误差平方平均</td>
+<td>越小越好</td>
+<td>常用于训练优化目标</td>
+<td>单位是平方，解释不直观</td>
+</tr>
+<tr>
+<td>RMSE</td>
+<td>MSE 开方，误差的真实量纲</td>
+<td>越小越好</td>
+<td>单位与原始一致</td>
+<td>仍受异常值影响</td>
+</tr>
+<tr>
+<td>MAE</td>
+<td>平均绝对误差</td>
+<td>越小越好</td>
+<td>易解释，鲁棒</td>
+<td>不可导，不适合做 loss</td>
+</tr>
+<tr>
+<td>R²</td>
+<td>解释方差比例</td>
+<td>越接近 1 越好</td>
+<td>表示模型能解释多少变异性</td>
+<td>对非线性模型意义较弱</td>
+</tr>
+<tr>
+<td>MAPE</td>
+<td>百分比误差</td>
+<td>越小越好</td>
+<td>百分比清晰直观</td>
+<td>不能用于真实值为 0 的情况</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>任务场景</th>
+<th>推荐指标</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对误差敏感</td>
+<td>MSE / RMSE</td>
+<td>放大大误差</td>
+</tr>
+<tr>
+<td>要求稳健不受离群值影响</td>
+<td>MAE</td>
+<td>对异常值鲁棒</td>
+</tr>
+<tr>
+<td>希望用“解释比例”衡量拟合程度</td>
+<td>R²</td>
+<td>表示模型能解释多少变异性</td>
+</tr>
+<tr>
+<td>商业场景，关注“相对误差”</td>
+<td>MAPE</td>
+<td>百分比误差清晰直观</td>
+</tr>
+</tbody>
+</table>
+<h5 id="_15">📌 排序/推荐系统任务（如个性化推荐）<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Precision@K</td>
+<td>前 K 个推荐中有多少是相关的（精确率）</td>
+</tr>
+<tr>
+<td>Recall@K</td>
+<td>所有相关项中前 K 个推荐命中了多少（召回率）</td>
+</tr>
+<tr>
+<td>NDCG@K</td>
+<td>归一化折损累计增益，考虑推荐结果的顺序和相关性</td>
+</tr>
+<tr>
+<td>MAP@K</td>
+<td>平均精度，适用于多轮推荐结果评价</td>
+</tr>
+<tr>
+<td>Hit Rate@K</td>
+<td>前 K 个中是否命中至少一个相关项（是否命中）</td>
+</tr>
+<tr>
+<td>AUC</td>
+<td>推荐正例得分高于负例的概率</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3_1">✅ 3. 多次评估与置信区间策略<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h4>
+<p>为了防止评估结果“运气好”，可使用以下策略：</p>
+<ul>
+<li><strong>重复交叉验证</strong>：例如 10 次 5-Fold（称为 repeated k-fold CV）</li>
+<li><strong>Bootstrap 自助法</strong>：重复采样 100~1000 次评估结果，统计平均值和置信区间</li>
+<li><strong>置信区间估计</strong>：</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+</span></code></pre></div>
+<h4 id="5_3">✅ 5. 线上评估策略<a class="headerlink" href="#5_3" title="Permanent link">&para;</a></h4>
+<h5 id="ab">📊 A/B 测试<a class="headerlink" href="#ab" title="Permanent link">&para;</a></h5>
+<ul>
+<li>将用户分成两组：<ul>
+<li>A：当前线上模型</li>
+<li>B：新模型</li>
+</ul>
+</li>
+<li>比较真实用户行为：CTR、转化率、留存等</li>
+</ul>
+<h5 id="shadow-testing">📦 Shadow Testing（影子测试）<a class="headerlink" href="#shadow-testing" title="Permanent link">&para;</a></h5>
+<ul>
+<li>新模型与旧模型同时在线运行，新模型只“听不说”不影响线上</li>
+<li>对比两者预测差异，提前预警部署风险</li>
+</ul>
+<h4 id="_16">✅ 五、总结图：评估策略选择导图<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>→ 任务类型？
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>   ├── 分类
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>   │     ├── 样本均衡？——准确率 + F1 + ROC
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>   │     └── 样本不均衡？——PR-AUC + Recall + F1
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>   ├── 回归
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>   │     └── MAE / MSE / R²
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>   ├── 排序/推荐
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>   │     └── NDCG / MAP / Recall@K
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>   └── 时间序列
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>         └── TimeSeriesSplit + MAE/MAPE
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>→ 数据量大小？
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>   ├── 小样本 —— K-Fold / Bootstrap
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>   └── 大样本 —— Holdout + 多次评估
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>→ 是否线上部署？
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>   └── A/B 测试 + 监控日志
+</span></code></pre></div>
+<h2 id="_17">六、超参数调优<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<h3 id="_18">🎯 什么是超参数？<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<p>超参数是在模型训练前需要人为指定的参数，例如：</p>
+<ul>
+<li>学习率 <code>learning_rate</code></li>
+<li>树深度 <code>max_depth</code></li>
+<li>正则系数 <code>alpha</code></li>
+<li>KNN 的 <code>k</code> 值</li>
+</ul>
+<p>它们 <strong>不会通过模型训练过程自动获得</strong>，必须手动设定或通过调参算法搜索。</p>
+<hr />
+<h3 id="_19">🔍 为什么要调优？<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<ul>
+<li>同一个模型在不同超参数下表现差异巨大</li>
+<li>自动调参能节省大量手工试错成本</li>
+<li>找到泛化能力更强、过拟合风险更小的模型</li>
+</ul>
+<hr />
+<h3 id="_20">🧠 常见调参方法<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Grid Search</td>
+<td>穷举所有可能的组合，计算成本高</td>
+</tr>
+<tr>
+<td>Random Search</td>
+<td>随机采样部分组合，效果好且效率高</td>
+</tr>
+<tr>
+<td>贝叶斯优化</td>
+<td>利用历史搜索结果建模，预测下一个搜索点</td>
+</tr>
+<tr>
+<td>Hyperband/ASHA</td>
+<td>支持提前终止差模型，提高深度学习调参效率</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1-grid-search">1. Grid Search（网格搜索）<a class="headerlink" href="#1-grid-search" title="Permanent link">&para;</a></h4>
+<p><strong>特点</strong>： 穷举所有可能的参数组合，计算量大但覆盖全面。</p>
+<p><strong>适合场景</strong>： 参数组合不多，训练时间允许。</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <span class="n">SVC</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="s1">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;rbf&#39;</span><span class="p">]</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">SVC</span><span class="p">(),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最佳参数组合：&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="2-random-search">2. Random Search（随机搜索）<a class="headerlink" href="#2-random-search" title="Permanent link">&para;</a></h4>
+<p><strong>特点</strong>： 随机选取部分参数组合，效率高。</p>
+<p><strong>适合场景</strong>： 参数空间大时（如深度神经网络）。</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">randint</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">param_dist</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">}</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">(),</span> <span class="n">param_dist</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">random_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最佳参数组合：&quot;</span><span class="p">,</span> <span class="n">random_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="3-bayesian-optimization">3. Bayesian Optimization（贝叶斯优化）<a class="headerlink" href="#3-bayesian-optimization" title="Permanent link">&para;</a></h4>
+<p><strong>特点</strong>： 通过概率模型预测最优参数，更智能地选择下一个搜索点。</p>
+<p><strong>适合场景</strong>： 高成本模型、复杂调参空间。</p>
+<p><strong>工具推荐</strong>： Optuna、scikit-optimize</p>
+<p><strong>Optuna 示例：</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">optuna</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="n">n_estimators</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    <span class="n">max_depth</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="k">return</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;maximize&quot;</span><span class="p">)</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最优参数：&quot;</span><span class="p">,</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="4-hyperband-asha">4. Hyperband / ASHA（早停算法）<a class="headerlink" href="#4-hyperband-asha" title="Permanent link">&para;</a></h4>
+<p><strong>特点</strong>： 动态资源分配（提前终止表现差的模型），大幅提高效率。</p>
+<p><strong>适合场景</strong>： 神经网络、AutoML。</p>
+<p><strong>工具推荐</strong>： Ray Tune, Keras Tuner</p>
+<p><strong>Ray Tune 示例：</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ray</span><span class="w"> </span><span class="kn">import</span> <span class="n">tune</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">train_model</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;lr&quot;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;dropout&quot;</span><span class="p">])</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="n">acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">train_and_eval</span><span class="p">()</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="n">tune</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">accuracy</span><span class="o">=</span><span class="n">acc</span><span class="p">)</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">analysis</span> <span class="o">=</span> <span class="n">tune</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    <span class="n">train_model</span><span class="p">,</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="n">tune</span><span class="o">.</span><span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">),</span> <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="n">tune</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)},</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    <span class="n">num_samples</span><span class="o">=</span><span class="mi">20</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="p">)</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最优配置：&quot;</span><span class="p">,</span> <span class="n">analysis</span><span class="o">.</span><span class="n">get_best_config</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">))</span>
+</span></code></pre></div>
+<h2 id="_21">七、过拟合和欠拟合<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>欠拟合</strong>：模型太简单，学不懂数据</li>
+<li><strong>过拟合</strong>：模型太复杂，把训练数据背下来了，连噪声也当成规律</li>
+</ul>
+<h3 id="underfitting">🔍 欠拟合（Underfitting）<a class="headerlink" href="#underfitting" title="Permanent link">&para;</a></h3>
+<h4 id="_22">✅ 特征：<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
+<ul>
+<li>训练误差 高</li>
+<li>测试误差也 高</li>
+<li>模型无法捕捉数据的模式</li>
+</ul>
+<h4 id="_23">🎯 原因：<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>原因</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型太简单</td>
+<td>用线性模型拟合非线性数据</td>
+</tr>
+<tr>
+<td>特征不够</td>
+<td>只用了 1-2 个简单特征</td>
+</tr>
+<tr>
+<td>训练时间不够</td>
+<td>神经网络训练 epoch 太少</td>
+</tr>
+<tr>
+<td>过强的正则化</td>
+<td>惩罚项太强，把模型“压扁”了</td>
+</tr>
+</tbody>
+</table>
+<h3 id="overfitting">🔍 过拟合（Overfitting）<a class="headerlink" href="#overfitting" title="Permanent link">&para;</a></h3>
+<h4 id="_24">✅ 特征：<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h4>
+<ul>
+<li>训练误差 低</li>
+<li>测试误差 高</li>
+<li>模型“记住”了训练数据，无法泛化</li>
+</ul>
+<h4 id="_25">🎯 原因：<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>原因</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型太复杂</td>
+<td>使用深度太深的神经网络</td>
+</tr>
+<tr>
+<td>特征维度太高</td>
+<td>上百维稀疏特征 + 样本太少</td>
+</tr>
+<tr>
+<td>数据量太少</td>
+<td>少量数据训练出复杂模型</td>
+</tr>
+<tr>
+<td>没有正则化</td>
+<td>不约束模型，自由过头了</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_26">🔧 如何解决？<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
+<h4 id="_27">✴️ 欠拟合的应对方法：<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h4>
+<ul>
+<li>使用更复杂的模型（如线性 → 决策树）</li>
+<li>增加特征、构造新特征</li>
+<li>训练更久，调大 epoch</li>
+<li>减小正则化力度</li>
+</ul>
+<h4 id="_28">✴️ 过拟合的应对方法：<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h4>
+<ul>
+<li>使用更简单的模型</li>
+<li>加强正则化（L1、L2）</li>
+<li>使用 Dropout（对神经网络）</li>
+<li>增加训练数据</li>
+<li>使用交叉验证选择模型</li>
+<li>提前停止训练（Early Stopping）</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tabs.link", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "search.suggest", "navigation.path", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../styles/js/tablesort.min.js"></script>
+      
+        <script src="../../../styles/js/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1941 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../activate/">
+      
+      
+        <link rel="next" href="../optimizer/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Pytorch损失函数 - 📚面试秘籍</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../styles/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../styles/css/custom-toc.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="📚面试秘籍" class="md-header__button md-logo" aria-label="📚面试秘籍" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            📚面试秘籍
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pytorch损失函数
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🏠Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../maths/math/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🐵程序员的数学
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../langs/python/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🦏语言大本营
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../algorithm/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐹算法大本营
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../cloud/docker/docker/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐺云原生
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../analysis/numpy/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🦧数据分析大营
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../machinelearning/scikit-learn/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐴机器学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../tensor/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐣深度学习
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../llm/huggingface/pipeline/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐙大模型
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../llmapp/langchain/basic/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🐠大模型应用
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="📚面试秘籍" class="md-nav__button md-logo" aria-label="📚面试秘籍" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    📚面试秘籍
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🏠Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../maths/math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🐵程序员的数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../langs/python/basic/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🦏语言大本营
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../algorithm/basic/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐹算法大本营
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../cloud/docker/docker/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐺云原生
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../analysis/numpy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🦧数据分析大营
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../machinelearning/scikit-learn/basic/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐴机器学习
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    🐣深度学习
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            🐣深度学习
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pytorch手册
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1">
+            <span class="md-nav__icon md-icon"></span>
+            Pytorch手册
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tensor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pytorch张量、自动求导和GPU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../activate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pytorch激活函数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Pytorch损失函数
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pytorch损失函数
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-mse-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 均方误差损失（MSE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mae-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 平均绝对误差损失（MAE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-huber-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Huber Loss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-cross-entropy-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 交叉熵损失（Cross-Entropy Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bce-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 二元交叉熵损失（BCE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hinge-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Hinge Loss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-kl-kullback-leibler-divergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. KL 散度（Kullback-Leibler Divergence）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结与选择建议
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-cross-entropy-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 交叉熵损失（Cross-Entropy Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bce-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 二元交叉熵损失（BCE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 关键区别与总结
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 常见问题
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../optimizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pytorch优化器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pytorch学习率调整器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pytorch可视化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pytorch数据预处理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../llm/huggingface/pipeline/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐙大模型
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../llmapp/langchain/basic/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    🐠大模型应用
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-mse-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 均方误差损失（MSE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mae-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 平均绝对误差损失（MAE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-huber-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Huber Loss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-cross-entropy-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 交叉熵损失（Cross-Entropy Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bce-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 二元交叉熵损失（BCE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hinge-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Hinge Loss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-kl-kullback-leibler-divergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. KL 散度（Kullback-Leibler Divergence）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结与选择建议
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-cross-entropy-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 交叉熵损失（Cross-Entropy Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bce-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 二元交叉熵损失（BCE Loss）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 关键区别与总结
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 常见问题
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">损失函数<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<hr />
+<h3 id="1-mse-loss">1. 均方误差损失（MSE Loss）<a class="headerlink" href="#1-mse-loss" title="Permanent link">&para;</a></h3>
+<p><strong>概念</strong>：计算预测值与真实值的平方差的平均值，对离群值敏感。<br />
+<strong>公式</strong>：  </p>
+<div class="arithmatex">\[
+L = \frac{1}{N} \sum_{i=1}^N (y_{\text{pred}}^{(i)} - y_{\text{true}}^{(i)})^2
+\]</div>
+<p><strong>适用场景</strong>：回归任务（如房价预测、温度预测）。<br />
+<strong>优点</strong>：梯度平滑，收敛快。<br />
+<strong>缺点</strong>：对异常值敏感，可能导致梯度爆炸。 (核心在于它的平方项会放大偏差大的样本的影响) </p>
+<p><strong>PyTorch 实现</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">mse_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">output</span> <span class="o">=</span> <span class="n">mse_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>  <span class="c1"># preds和targets形状相同</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="2-mae-loss">2. 平均绝对误差损失（MAE Loss）<a class="headerlink" href="#2-mae-loss" title="Permanent link">&para;</a></h3>
+<p><strong>概念</strong>：计算预测值与真实值的绝对差的平均值，对离群值鲁棒。<br />
+<strong>公式</strong>：  </p>
+<div class="arithmatex">\[
+L = \frac{1}{N} \sum_{i=1}^N |y_{\text{pred}}^{(i)} - y_{\text{true}}^{(i)}|
+\]</div>
+<p><strong>适用场景</strong>：回归任务（数据包含噪声或异常值）。<br />
+<strong>优点</strong>：对异常值不敏感，梯度稳定。<br />
+<strong>缺点</strong>：收敛速度慢，梯度在零点不可导。<br />
+<strong>PyTorch 实现</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">mae_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">L1Loss</span><span class="p">()</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">output</span> <span class="o">=</span> <span class="n">mae_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="3-huber-loss">3. Huber Loss<a class="headerlink" href="#3-huber-loss" title="Permanent link">&para;</a></h3>
+<p><strong>概念</strong>：MSE 和 MAE 的结合，在误差较小时使用平方项，较大时使用线性项。<br />
+<strong>公式</strong>：  </p>
+<div class="arithmatex">\[
+L = \frac{1}{N} \sum_{i=1}^N 
+\begin{cases} 
+0.5 (y_{\text{pred}}^{(i)} - y_{\text{true}}^{(i)})^2, &amp; \text{if } |y_{\text{pred}} - y_{\text{true}}| \leq \delta \\
+\delta |y_{\text{pred}} - y_{\text{true}}| - 0.5 \delta^2, &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<p><strong>适用场景</strong>：回归任务（需平衡对异常值的敏感性和收敛速度）。<br />
+<strong>优点</strong>：结合 MSE 和 MAE 的优点，鲁棒性强。<br />
+<strong>缺点</strong>：需手动调整超参数 <span class="arithmatex">\(\delta\)</span>（通常取 1.0）。<br />
+<strong>PyTorch 实现</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">huber_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">error</span> <span class="o">=</span> <span class="n">preds</span> <span class="o">-</span> <span class="n">targets</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">abs_error</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">quadratic</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">abs_error</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">linear</span> <span class="o">=</span> <span class="n">abs_error</span> <span class="o">-</span> <span class="n">quadratic</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">quadratic</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">linear</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">output</span> <span class="o">=</span> <span class="n">huber_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="4-cross-entropy-loss">4. 交叉熵损失（Cross-Entropy Loss）<a class="headerlink" href="#4-cross-entropy-loss" title="Permanent link">&para;</a></h3>
+<p><strong>概念</strong>：衡量预测概率分布与真实分布的差异，常用作分类任务损失函数。<br />
+<strong>公式</strong>（多分类）：  </p>
+<div class="arithmatex">\[
+L = -\sum_{i=1}^N y_{\text{true}}^{(i)} \log \left( \text{Softmax}(y_{\text{pred}}^{(i)}) \right)
+\]</div>
+<p><strong>适用场景</strong>：多分类任务（如图像分类）。<br />
+<strong>优点</strong>：梯度优化方向明确，对错误预测惩罚大。<br />
+<strong>缺点</strong>：对类别不平衡敏感。<br />
+<strong>PyTorch 实现</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">ce_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>  <span class="c1"># 输入为 logits（无需 softmax）</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">output</span> <span class="o">=</span> <span class="n">ce_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>  <span class="c1"># preds: (N, C), targets: (N,)</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="5-bce-loss">5. 二元交叉熵损失（BCE Loss）<a class="headerlink" href="#5-bce-loss" title="Permanent link">&para;</a></h3>
+<p><strong>概念</strong>：二分类任务的交叉熵损失，也可用于多标签分类。<br />
+<strong>公式</strong>：  </p>
+<div class="arithmatex">\[
+L = -\frac{1}{N} \sum_{i=1}^N \left[ y_{\text{true}}^{(i)} \log \sigma(y_{\text{pred}}^{(i)}) + (1 - y_{\text{true}}^{(i)}) \log (1 - \sigma(y_{\text{pred}}^{(i)})) \right]
+\]</div>
+<p><strong>适用场景</strong>：二分类、多标签分类（如医学图像病灶检测）。<br />
+<strong>优点</strong>：直接优化概率输出。<br />
+<strong>缺点</strong>：需注意数值稳定性（建议使用 <code>BCEWithLogitsLoss</code>）。<br />
+<strong>PyTorch 实现</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">bce_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span>  <span class="c1"># 自动应用 Sigmoid</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">output</span> <span class="o">=</span> <span class="n">bce_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>  <span class="c1"># preds和targets形状相同</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="6-hinge-loss">6. Hinge Loss<a class="headerlink" href="#6-hinge-loss" title="Permanent link">&para;</a></h3>
+<p><strong>概念</strong>：最大化分类边界，常用于支持向量机（SVM）。<br />
+<strong>公式</strong>（二分类）：  </p>
+<div class="arithmatex">\[
+L = \frac{1}{N} \sum_{i=1}^N \max(0, 1 - y_{\text{true}}^{(i)} \cdot y_{\text{pred}}^{(i)})
+\]</div>
+<p><strong>适用场景</strong>：二分类、结构化预测任务。<br />
+<strong>优点</strong>：对正确分类的点不产生损失，关注边界附近的样本。<br />
+<strong>缺点</strong>：不直接输出概率。<br />
+<strong>PyTorch 实现</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">hinge_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">HingeEmbeddingLoss</span><span class="p">()</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">output</span> <span class="o">=</span> <span class="n">hinge_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>  <span class="c1"># targets取值为1或-1</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="7-kl-kullback-leibler-divergence">7. KL 散度（Kullback-Leibler Divergence）<a class="headerlink" href="#7-kl-kullback-leibler-divergence" title="Permanent link">&para;</a></h3>
+<p><strong>概念</strong>：衡量两个概率分布的差异，常用于生成模型。<br />
+<strong>公式</strong>：  </p>
+<div class="arithmatex">\[
+L = \sum_{i=1}^N P(y_{\text{true}}^{(i)}) \log \left( \frac{P(y_{\text{true}}^{(i)})}{P(y_{\text{pred}}^{(i)})} \right)
+\]</div>
+<p><strong>适用场景</strong>：分布匹配任务（如变分自编码器）。<br />
+<strong>优点</strong>：严格衡量分布差异。<br />
+<strong>缺点</strong>：不对称，需注意输入为概率分布。<br />
+<strong>PyTorch 实现</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">kl_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">KLDivLoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;batchmean&#39;</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">log_probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 输入需为 log 概率</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">output</span> <span class="o">=</span> <span class="n">kl_loss</span><span class="p">(</span><span class="n">log_probs</span><span class="p">,</span> <span class="n">targets_probs</span><span class="p">)</span>  <span class="c1"># targets_probs为概率分布</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="_2">总结与选择建议<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>损失函数</strong></th>
+<th><strong>任务类型</strong></th>
+<th><strong>特点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MSE</td>
+<td>回归</td>
+<td>对异常敏感，梯度稳定</td>
+</tr>
+<tr>
+<td>MAE</td>
+<td>回归</td>
+<td>对异常鲁棒，收敛慢</td>
+</tr>
+<tr>
+<td>Huber Loss</td>
+<td>回归</td>
+<td>平衡鲁棒性与收敛速度</td>
+</tr>
+<tr>
+<td>Cross-Entropy</td>
+<td>多分类</td>
+<td>分类任务首选，梯度高效</td>
+</tr>
+<tr>
+<td>BCE</td>
+<td>二分类/多标签</td>
+<td>输出概率，需注意数值稳定性</td>
+</tr>
+<tr>
+<td>Hinge Loss</td>
+<td>SVM/二分类</td>
+<td>关注决策边界，不输出概率</td>
+</tr>
+<tr>
+<td>KL Divergence</td>
+<td>分布匹配</td>
+<td>衡量分布差异，需概率输入</td>
+</tr>
+</tbody>
+</table>
+<p>根据任务类型和数据特性选择合适的损失函数，并注意 PyTorch 中各损失函数的输入格式（如是否需要提前应用 Softmax/Sigmoid）。</p>
+<p>以下是二元交叉熵（BCE Loss）和交叉熵损失（Cross-Entropy Loss）的详细对比与原理讲解，结合公式、示例和代码实现。</p>
+<hr />
+<h3 id="1-cross-entropy-loss"><strong>1. 交叉熵损失（Cross-Entropy Loss）</strong><a class="headerlink" href="#1-cross-entropy-loss" title="Permanent link">&para;</a></h3>
+<h4 id="_3"><strong>原理</strong><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>交叉熵衡量两个概率分布之间的差异。<br />
+在分类任务中，我们希望模型的预测概率分布 <span class="arithmatex">\(P_{\text{pred}}\)</span> 尽可能接近真实的概率分布 <span class="arithmatex">\(P_{\text{true}}\)</span>。<br />
+<strong>公式</strong>（多分类）：  </p>
+<div class="arithmatex">\[
+L = -\sum_{i=1}^C y_{\text{true}}^{(i)} \log \left( p_{\text{pred}}^{(i)} \right)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(C\)</span>：类别总数  </li>
+<li><span class="arithmatex">\(y_{\text{true}}^{(i)}\)</span>：真实标签的 one-hot 编码（第 <span class="arithmatex">\(i\)</span> 类为 1，其余为 0）  </li>
+<li><span class="arithmatex">\(p_{\text{pred}}^{(i)}\)</span>：模型预测的第 <span class="arithmatex">\(i\)</span> 类的概率（通过 Softmax 得到）</li>
+</ul>
+<h4 id="_4"><strong>适用场景</strong><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>多分类任务</strong>（每个样本只属于一个类别），例如 MNIST 手写数字分类（10 个类别）。</li>
+</ul>
+<h4 id="pytorch"><strong>PyTorch 实现</strong><a class="headerlink" href="#pytorch" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># 假设预测值 preds 是未归一化的 logits（无需手动 Softmax）</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]])</span>  <span class="c1"># 形状：(N, C)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># 真实类别索引，形状：(N,)</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">ce_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">loss</span> <span class="o">=</span> <span class="n">ce_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>  <span class="c1"># 输出：0.8133</span>
+</span></code></pre></div>
+<h4 id="_5"><strong>计算步骤</strong><a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>对 <code>preds</code> 应用 Softmax：
+   $$
+   \text{Softmax}(x_i) = \frac{e^{x_i}}{\sum_{j=1}^C e^{x_j}}
+   $$</li>
+<li>第一个样本 <code>[2.0, 1.0, 0.1]</code> 的 Softmax 结果：≈ <code>[0.659, 0.242, 0.099]</code></li>
+<li>取真实类别对应的概率的对数：</li>
+<li>第一个样本的真实类别是 0 → <span class="arithmatex">\(-\log(0.659) ≈ 0.417\)</span></li>
+<li>第二个样本的真实类别是 1 → <span class="arithmatex">\(-\log(0.242) ≈ 1.418\)</span></li>
+<li>对所有样本求平均：<span class="arithmatex">\((0.417 + 1.418)/2 ≈ 0.9175\)</span></li>
+</ol>
+<hr />
+<h3 id="2-bce-loss"><strong>2. 二元交叉熵损失（BCE Loss）</strong><a class="headerlink" href="#2-bce-loss" title="Permanent link">&para;</a></h3>
+<h4 id="_6"><strong>原理</strong><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>BCE 是交叉熵在二分类或多标签分类中的特例，每个输出节点独立计算概率。<br />
+<strong>公式</strong>（单个样本）：</p>
+<div class="arithmatex">\[
+L = -\left[ y_{\text{true}} \log(p_{\text{pred}}) + (1 - y_{\text{true}}) \log(1 - p_{\text{pred}}) \right]
+\]</div>
+<ul>
+<li><span class="arithmatex">\(y_{\text{true}} \in \{0, 1\}\)</span>：真实标签  </li>
+<li><span class="arithmatex">\(p_{\text{pred}}\)</span>：模型预测的正类概率（通过 Sigmoid 得到）</li>
+</ul>
+<h4 id="_7"><strong>适用场景</strong><a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>二分类任务</strong>（如猫狗分类）</li>
+<li><strong>多标签分类</strong>（如图像中存在多个物体，每个标签独立判断）</li>
+</ul>
+<h4 id="pytorch_1"><strong>PyTorch 实现</strong><a class="headerlink" href="#pytorch_1" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 二分类示例（单标签）</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">])</span>  <span class="c1"># 未归一化的 logits（形状：N,）</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>  <span class="c1"># 真实标签（形状：N,）</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">bce_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span>  <span class="c1"># 自动应用 Sigmoid</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">loss</span> <span class="o">=</span> <span class="n">bce_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>  <span class="c1"># 输出：0.6893</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># 多标签分类示例（每个样本有多个标签）</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>  <span class="c1"># 形状：(N, C)</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>  <span class="c1"># 形状：(N, C)</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">bce_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">loss</span> <span class="o">=</span> <span class="n">bce_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>  <span class="c1"># 输出：0.4562</span>
+</span></code></pre></div>
+<h4 id="_8"><strong>计算步骤</strong><a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>对 <code>preds</code> 应用 Sigmoid：</li>
+</ol>
+<p>$$
+   \sigma(x) = \frac{1}{1 + e^{-x}}
+   $$ </p>
+<ul>
+<li>第一个样本的预测值 <code>0.8</code> → Sigmoid 结果为 ≈ <code>0.690</code></li>
+<li>计算损失：</li>
+<li>第一个样本的真实标签为 1 → <span class="arithmatex">\(-\log(0.690) ≈ 0.371\)</span></li>
+<li>第二个样本的真实标签为 0 → <span class="arithmatex">\(-\log(1 - \sigma(-1.2)) = -\log(0.769) ≈ 0.262\)</span></li>
+<li>第三个样本的真实标签为 1 → <span class="arithmatex">\(-\log(\sigma(2.1)) ≈ 0.122\)</span></li>
+<li>对所有样本求平均：<span class="arithmatex">\((0.371 + 0.262 + 0.122)/3 ≈ 0.2518\)</span></li>
+</ul>
+<hr />
+<h3 id="3"><strong>3. 关键区别与总结</strong><a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>Cross-Entropy Loss</strong></th>
+<th><strong>BCE Loss</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>任务类型</strong></td>
+<td>多分类（单标签）</td>
+<td>二分类/多标签分类</td>
+</tr>
+<tr>
+<td><strong>输出节点数</strong></td>
+<td><span class="arithmatex">\(C\)</span>（类别总数）</td>
+<td>每个标签一个节点</td>
+</tr>
+<tr>
+<td><strong>激活函数</strong></td>
+<td>Softmax（归一化为概率分布）</td>
+<td>Sigmoid（独立概率）</td>
+</tr>
+<tr>
+<td><strong>真实标签格式</strong></td>
+<td>类别索引或 one-hot 编码</td>
+<td>0/1 或浮点概率（多标签时为向量）</td>
+</tr>
+<tr>
+<td><strong>数值稳定性</strong></td>
+<td>内置处理（无需手动处理）</td>
+<td>推荐使用 <code>BCEWithLogitsLoss</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="4"><strong>4. 常见问题</strong><a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<h4 id="q1-softmax-sigmoid"><strong>Q1：为什么多分类用 Softmax，而二分类用 Sigmoid？</strong><a class="headerlink" href="#q1-softmax-sigmoid" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Softmax</strong>：将输出归一化为概率分布（总和为 1），适用于互斥类别（如 MNIST 数字分类）。  </li>
+<li><strong>Sigmoid</strong>：独立计算每个节点的概率，适用于非互斥标签（如多标签分类中的“同时包含猫和狗”）。</li>
+</ul>
+<h4 id="q2"><strong>Q2：多标签分类时如何处理？</strong><a class="headerlink" href="#q2" title="Permanent link">&para;</a></h4>
+<ul>
+<li>对每个标签独立使用 Sigmoid，计算每个标签的 BCE 损失后取平均。  </li>
+<li>示例代码：
+  <div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 多标签分类（3 个标签）</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>  <span class="c1"># 形状：(N, C)</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>  <span class="c1"># 形状：(N, C)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span></code></pre></div></li>
+</ul>
+<h4 id="q3-bcewithlogitsloss"><strong>Q3：为什么推荐 <code>BCEWithLogitsLoss</code>？</strong><a class="headerlink" href="#q3-bcewithlogitsloss" title="Permanent link">&para;</a></h4>
+<ul>
+<li>它结合了 Sigmoid 和 BCE 计算，通过数值稳定化的实现避免 <code>log(0)</code> 导致的 NaN 错误。</li>
+</ul>
+<hr />
+<h3 id="5"><strong>5. 总结</strong><a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cross-Entropy Loss</strong>：多分类任务的标配，直接优化概率分布。  </li>
+<li><strong>BCE Loss</strong>：二分类/多标签任务的核心，需注意 Sigmoid 激活和数值稳定性。  </li>
+<li><strong>选择依据</strong>：根据任务类型（单标签 vs 多标签）和输出格式（概率分布 vs 独立概率）选择损失函数。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tabs.link", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "search.suggest", "navigation.path", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../styles/js/tablesort.min.js"></script>
+      
+        <script src="../../../styles/js/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

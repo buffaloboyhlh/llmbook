@@ -1,0 +1,11 @@
+/* 一级标题（H2） - 主色靛蓝 */
+.md-nav--secondary > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #f9960a !important;  /* 深靛蓝 */
+  font-weight: 600;
+}
+
+/* 二级标题（H3） - 清晰蓝 */
+.md-nav--secondary > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #9ca3af !important;  /* 蓝色 */
+  font-weight: 500;
+}
